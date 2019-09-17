@@ -1,0 +1,29 @@
+:root {
+  /* COLOR */
+  --main-color: #505254;
+  --secondary-color: #cf022b;
+  --third-color: #FBFBFA;
+  --darken-third-color: #DCDEDD;
+  /* OTHERS */
+  --border-color: var(--main-color);
+  /* FONTS */
+  --font-color: var(--main-color);
+  --link-color: #ee7d00;
+  --font-color-secondary: #fff;
+  --font-size-xl: 22px;
+  --font-size-l: 18px;
+  --font-size-m: 16px;
+  --font-size-s: 14px;
+  --font-size-xs: 12px;
+
+  /* HEIGHT */
+  --height-header: 70px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
