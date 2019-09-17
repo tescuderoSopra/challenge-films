@@ -6,6 +6,7 @@ class SeekerFilms extends LitElement {
     return {
       buttonLabel: { type: String },
       placeholder: { type: String },
+      search: { type: String },
     }
   }
 
@@ -37,6 +38,16 @@ class SeekerFilms extends LitElement {
     super();
     this.buttonLabel = this.buttonLabel || 'Search';
     this.placeholder = this.placeholder || 'Write your movie / series';
+    this.search = this.search || null;
+  }
+
+  updated(changedProperties) {
+    changedProperties.forEach((oldValue, propName) => {
+      if(propName === 'search' && this[propName] && this[propName] !== 'undefined') {
+        const newSearch = this[propName];
+        this.shadowRoot.getElementById('search').value = newSearch;
+      } 
+    });
   }
 
   _search() {
@@ -49,7 +60,7 @@ class SeekerFilms extends LitElement {
   render() {
     return html`
       <div class="seeker">
-        <input tabindex="1" id="search" placeholder=${this.placeholder} />
+        <input tabindex="1" id="search" placeholder=${this.placeholder} defaultValue=${this.search} />
         <button tabindex="2" @click="${this._search}">${this.buttonLabel}</button>
       </div>
     `;

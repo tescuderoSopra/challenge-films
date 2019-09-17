@@ -1,13 +1,17 @@
 import { LitElement, html, css } from 'lit-element';
 import './list-films';
 import './seeker-films';
+import './last-searches';
+
 import constants from '../constants';
-import { saveFilmsInStorage, transformArrayFilmsSeries, findFilmsInStorage, findAndModifyFilm } from '../libs/functions';
+import { saveFilmsInStorage, transformArrayFilmsSeries, findFilmsInStorage, findAndModifyFilm, searchInStorage } from '../libs/functions';
 
 class AppShell extends LitElement {
     static get properties() {
         return {
             films: { type: Array }, // array de objetos media_type, title, isFavourite (T o F)
+            searches: { type: Array }, // array de objetos con los search, films (array)
+            search: { type: String }, // string con la búsqueda reciente
         }
     }
 
@@ -30,15 +34,19 @@ class AppShell extends LitElement {
     constructor() {
         super();
         this.films = this.films || [];
+        this.searches = searchInStorage('topics');
         document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
     }
 
     render() {
         return html`
         <header>
-            <seeker-films @search=${this._searchFilm} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
+            <seeker-films @search=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
         </header>
         <main>
+            ${this.searches && this.searches.length ?
+                html`<last-searches @dispatchSelectLastSearch=${this._lastSearch} .searches=${this.searches}></last-searches>`
+                : ''}
             <list-films .films=${this.films}></list-films>
         </main>
     `;
@@ -86,6 +94,13 @@ class AppShell extends LitElement {
     _dispatchChangeFavourite({ detail: id }) {
         // cambiamos si es o no favorito
         findAndModifyFilm(id);
+    }
+
+    _lastSearch({ detail: lastSearch }) {
+        // this.films será lastSearch.films
+        const films = findFilmsInStorage(lastSearch);
+        this.search = lastSearch;
+        this.films = films;
     }
 }
 
