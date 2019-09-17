@@ -43,7 +43,7 @@ class ListFilms extends LitElement {
             return html`
                 <ul>
                     ${this.films.map(film => html`
-                        <item-film withFavourites class="detail" .item="${film}"></item-film>`
+                        <item-film withFavourites class="detail" .item="${film}" url="/detail/${film.id}"></item-film>`
             )}
                 </ul>`;
         }

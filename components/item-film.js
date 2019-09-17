@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit-element';
 import constants from '../constants';
 import styles from './styles/item-film/item-film-css';
 import detailCSS from './styles/item-film/detail-css';
+import searchesCSS from './styles/item-film/searches-css';
 import './fa-icon';
 
 class ItemFilm extends LitElement {
@@ -11,6 +12,7 @@ class ItemFilm extends LitElement {
       item: { type: Object },
       click: { type: Function },
       withFavourites: { type: Boolean },
+      url: { type: String },
       class: { type: String },
     }
   }
@@ -19,6 +21,7 @@ class ItemFilm extends LitElement {
     return [
       styles,
       detailCSS,
+      searchesCSS
     ];
   }
 
@@ -85,6 +88,9 @@ class ItemFilm extends LitElement {
 
   _renderItem() {
     if (this.withFavourites) {
+      if (this.url) {
+        return html`<a href="${this.url}">${this._renderCard()}</a>`;
+      }
       return html`${this._renderCard()}`;
     }
     return html`${this.item.title}`

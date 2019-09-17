@@ -50,3 +50,38 @@ export const findAndModifyFilm = id => {
     myStorageFilms[filmIndex].isFavourite = !myStorageFilms[filmIndex].isFavourite;
     writeInStorage('films', myStorageFilms);
 }
+
+export const tagRef = (html) => {
+    const cache = new WeakMap();
+    return (s, ...e) => {
+        const tagIndex = (t, i) =>
+            // checks for '*<' or '*</' and a valid tagname
+            /[^>]*<\/?$/.test(t) && /[\w-]+/.test(e[i]) && i;
+        const indices = s.map(tagIndex).filter(i => i !== false);
+        if (indices.length === 0) return html.call(null, s, ...e);
+
+        const isTagIndex = i => indices.indexOf(i) !== -1;
+
+        let strings = cache.get(s);
+        if (!strings) {
+            strings = s.reduce(
+                (acc, token, i) =>
+                    isTagIndex(i - 1)
+                        ? acc // if prev was tag skip token, it was joined below
+                        : isTagIndex(i)
+                            ? acc.concat([token, s[i + 1]].join(e[i]))
+                            : acc.concat(token),
+                []
+            );
+            cache.set(s, strings);
+        }
+
+        const exps = e.filter((_, i) => !isTagIndex(i));
+        return html.call(null, strings, ...exps);
+    };
+}
+
+export const findFilmById = id => {
+    const myStorageFilms = searchInStorage('films');
+    return myStorageFilms.find(storageFilm => storageFilm.id.toString() === id);
+}
