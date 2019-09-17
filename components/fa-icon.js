@@ -23,7 +23,7 @@ export class FaIcon extends LitElement {
     this.iclass = "";
     const fontEl = document.createElement('link');
     fontEl.rel = 'stylesheet';
-    fontEl.href = 'https://use.fontawesome.com/releases/v5.0.13/css/all.css';
+    fontEl.href = '/styles/icons.min.css';
     document.head.appendChild(fontEl);
   }
   render() {
