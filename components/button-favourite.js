@@ -28,7 +28,7 @@ class ButtonFavourite extends LitElement {
 
     render() {
         return html`
-                <button tabindex="3" @click=${this._showListFavourites}>
+                <button @click=${this._showListFavourites}>
                     <span>Mis favoritos</span>
                     <fa-icon iclass="fa fa-heart active"></fa-icon>
                 </button>
