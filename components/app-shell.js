@@ -30,7 +30,6 @@ class AppShell extends LitElement {
         return html`
         <header>
             <seeker-films @search=${this._searchFilm} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
-            <button-favourite @showListFavourites=${this._showListFavourites}></button-favourite>
         </header>
     `;
     }
@@ -49,7 +48,6 @@ class AppShell extends LitElement {
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
@@ -67,6 +65,7 @@ class AppShell extends LitElement {
                     saveFilmsInStorage(films);
                     // recuperamos de localStorage las películas
                     this.films = films;
+
                 } else {
                     this.films = [];
                 }
