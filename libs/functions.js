@@ -28,13 +28,27 @@ export const saveFilmsInStorage = (films) => {
     writeInStorage('films', myStorage);
 }
 
-export const transformArrayFilmsSeries = (filmsAndSeries) => filmsAndSeries
-    .filter(filmsAndSerie => filmsAndSerie.media_type === 'tv' || filmsAndSerie.media_type === 'movie')
-    .map(filmAndSerie => ({
-        ...filmAndSerie,
-        title: filmAndSerie.title || filmAndSerie.name,
-        mediaType: filmAndSerie.media_type,
-    }));
+export const saveNewFavouriteInStorage = (film) => {
+    const myStorage = searchInStorage('films');
+    if (myStorage && !myStorage.find(storage => storage.title === film.title)) {
+        myStorage.push({
+            ...film,
+            isFavourite: true,
+        })
+    }
+    writeInStorage('films', myStorage);
+}
+
+
+export const saveSearchInStorage = topic => {
+    const myStorageTopics = searchInStorage('topics');
+    if (myStorageTopics && !myStorageTopics.find(storageTopic => storageTopic.title === topic)) {
+        myStorageTopics.unshift({ title: topic });
+    }
+
+    writeInStorage('topics', myStorageTopics);
+    return myStorageTopics;
+}
 
 export const findFilmsInStorage = topic => {
     const myStorage = searchInStorage('films');
@@ -44,6 +58,20 @@ export const findFilmsInStorage = topic => {
     return [];
 }
 
+export const findFilmsFavouriteInStorage = () => {
+    const myStorage = searchInStorage('films');
+    if (myStorage) {
+        return myStorage.filter(storage => storage.isFavourite);
+    }
+    return [];
+}
+
+export const findFilmById = id => {
+    const myStorageFilms = searchInStorage('films');
+    return myStorageFilms.find(storageFilm => storageFilm.id.toString() === id);
+}
+
+
 export const findAndModifyFilm = id => {
     const myStorageFilms = searchInStorage('films');
     const filmIndex = myStorageFilms.findIndex(storageFilm => storageFilm.id === id);
@@ -51,6 +79,14 @@ export const findAndModifyFilm = id => {
     writeInStorage('films', myStorageFilms);
 }
 
+
+export const transformArrayFilmsSeries = (filmsAndSeries) => filmsAndSeries
+    .filter(filmsAndSerie => filmsAndSerie.media_type === 'tv' || filmsAndSerie.media_type === 'movie')
+    .map(filmAndSerie => ({
+        ...filmAndSerie,
+        title: filmAndSerie.title || filmAndSerie.name,
+        mediaType: filmAndSerie.media_type,
+    }));
 export const tagRef = (html) => {
     const cache = new WeakMap();
     return (s, ...e) => {
@@ -79,9 +115,4 @@ export const tagRef = (html) => {
         const exps = e.filter((_, i) => !isTagIndex(i));
         return html.call(null, strings, ...exps);
     };
-}
-
-export const findFilmById = id => {
-    const myStorageFilms = searchInStorage('films');
-    return myStorageFilms.find(storageFilm => storageFilm.id.toString() === id);
 }

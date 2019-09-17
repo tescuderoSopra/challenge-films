@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit-element';
 import './item-film';
 
 class ListFilms extends LitElement {
+
     static get properties() {
         return {
             films: { type: Array },

@@ -69,7 +69,7 @@ class DetailItem extends LitElement {
             .catch(ex => console.log('ex', ex))
             .then((result) => {
                 const filmStorage = findFilmById(this.id);
-                this.film = { ...filmStorage ,...result, title: result.name || result.title };
+                this.film = { ...filmStorage ,...result, title: result.title || result.name };
             });
     }
 

@@ -2,9 +2,11 @@ import { LitElement, html, css } from 'lit-element';
 import './list-films';
 import './seeker-films';
 import './last-searches';
+import './form-favourite';
+import './button-favourite';
 
+import { saveFilmsInStorage, saveSearchInStorage, transformArrayFilmsSeries, searchInStorage, findFilmsInStorage, findAndModifyFilm, saveNewFavouriteInStorage, findFilmsFavouriteInStorage } from '../libs/functions';
 import constants from '../constants';
-import { saveFilmsInStorage, transformArrayFilmsSeries, findFilmsInStorage, findAndModifyFilm, searchInStorage } from '../libs/functions';
 
 class AppShell extends LitElement {
     static get properties() {
@@ -12,6 +14,9 @@ class AppShell extends LitElement {
             films: { type: Array }, // array de objetos media_type, title, isFavourite (T o F)
             searches: { type: Array }, // array de objetos con los search, films (array)
             search: { type: String }, // string con la búsqueda reciente
+            showCreateFavourites: { type: Boolean }, // booleano que permite ver la modal donde crear una peli/serie nueva
+            favourites: { type: Array }, //array de favoritos
+            showListFavourites: { type: Boolean }, // booleano que permite mostrar la lista de favoritos
         }
     }
 
@@ -22,11 +27,20 @@ class AppShell extends LitElement {
                 padding: 10px;
                 border-bottom: 2px solid var(--main-color);
             }
+
             main {
                 background-color: var(--third-color);
                 height: 100%;
                 width: 100%;
                 margin: 0;
+            }
+            main .showModalCreateFavourites {
+                position: fixed;
+                width: 100%;
+                height: 50px;
+                border-top: 2px solid var(--main-color);
+                bottom: 0;
+                background-color: var(--third-color);
             }
         `
     }
@@ -34,22 +48,38 @@ class AppShell extends LitElement {
     constructor() {
         super();
         this.films = this.films || [];
+        this.favourites = findFilmsFavouriteInStorage();
+        this.showListFavourites = false;
         this.searches = searchInStorage('topics');
+        this.showCreateFavourites = false;
         document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
+        document.addEventListener('addFavourite', this._addFavourite);
     }
 
     render() {
         return html`
         <header>
             <seeker-films @search=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
+            <button-favourite @showListFavourites=${this._showListFavourites}></button-favourite>
         </header>
         <main>
             ${this.searches && this.searches.length ?
                 html`<last-searches @dispatchSelectLastSearch=${this._lastSearch} .searches=${this.searches}></last-searches>`
                 : ''}
-            <list-films .films=${this.films}></list-films>
+            <list-films
+                .films=${this.showListFavourites ? this.favourites : this.films}
+                notResults=${this.showListFavourites ? 'No hay favoritos' : ''}>
+            </list-films>
+            ${this.showCreateFavourites ? html`<form-favourite @closeModal=${this._showModalFavourites}></form-favourite>` : null}
+            <button class="showModalCreateFavourites" @click=${this._showModalFavourites}>
+                ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
+            </button>
         </main>
     `;
+    }
+
+    _showListFavourites() {
+        this.showListFavourites = !this.showListFavourites;
     }
 
     _searchFilm({ detail: topic }) {
@@ -67,7 +97,6 @@ class AppShell extends LitElement {
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
@@ -83,12 +112,19 @@ class AppShell extends LitElement {
                     let films = transformArrayFilmsSeries(results);
                     // almacenamos en localstorage los datos sin machacar los favoritos
                     saveFilmsInStorage(films);
+                    // guardamos el topic en búsquedas recientes
+                    this.searches = saveSearchInStorage(topic);
                     // recuperamos de localStorage las películas
                     this.films = films;
+                    this.showListFavourites = false;
                 } else {
                     this.films = [];
                 }
             });
+    }
+
+    _showModalFavourites() {
+        this.showCreateFavourites = !this.showCreateFavourites;
     }
 
     _dispatchChangeFavourite({ detail: id }) {
@@ -101,6 +137,13 @@ class AppShell extends LitElement {
         const films = findFilmsInStorage(lastSearch);
         this.search = lastSearch;
         this.films = films;
+        this.showListFavourites = false;
+    }
+
+    _addFavourite({ detail: favourite }) {
+        // añadir un nuevo favorito
+        saveNewFavouriteInStorage(favourite);
+        this.films = searchInStorage('films');
     }
 }
 
