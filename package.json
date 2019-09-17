@@ -5,6 +5,9 @@
   "author": "first-app",
   "license": "MIT",
   "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --env.mode development --compress --watch --open",
+    "start:build": "es-dev-server --app-index dist/index.html --open",
     "start": "es-dev-server --app-index index.html --node-resolve --open --watch",
     "start:compatibility": "es-dev-server --app-index index.html --compatibility all --node-resolve --open --watch"
   },
@@ -14,6 +17,13 @@
     "material-icons-font": "^2.0.0"
   },
   "devDependencies": {
-    "es-dev-server": "^1.5.0"
+    "@open-wc/building-webpack": "^2.6.1",
+    "@open-wc/webpack-index-html-plugin": "^1.4.1",
+    "copy-webpack-plugin": "^5.0.4",
+    "es-dev-server": "^1.18.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   }
 }

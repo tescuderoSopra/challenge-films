@@ -60,8 +60,9 @@ class SeekerFilms extends LitElement {
   render() {
     return html`
       <div class="seeker">
-        <input tabindex="1" id="search" placeholder=${this.placeholder} defaultValue=${this.search} />
-        <button tabindex="2" @click="${this._search}">${this.buttonLabel}</button>
+        <label for="search">Realice una búsqueda</label>
+        <input id="search" placeholder=${this.placeholder} defaultValue=${this.search} />
+        <button title="${this.buttonLabel}" @click="${this._search}">${this.buttonLabel}</button>
       </div>
     `;
   }

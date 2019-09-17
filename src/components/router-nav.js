@@ -1,4 +1,4 @@
-import { LitElement, html, TemplateResult } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import paths from '../libs/paths';
 import { tagRef } from '../libs/functions';
 

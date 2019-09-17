@@ -97,7 +97,6 @@ class AppShell extends LitElement {
             const films = findFilmsInStorage(topic);
             this.films = films;
         }
-        console.log('searchFilm');
         this.search = topic;
         this.loading = false;
     }

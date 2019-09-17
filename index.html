@@ -4,7 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <link rel="stylesheet" type="text/css" href="/styles/style.css" shim-shadowdom/>
+  <meta name="description" content="Buscador de películas">
+  <link rel="preload" as="style" type="text/css" href="./src/styles/style.css" onload="this.onload =null; this.rel='stylesheet'" />
+
+  <link rel="preload" href="./src/styles/icons.min.css" as="style" />
+
   <base href="/">
   <title>Buscador de películas</title>
 </head>
@@ -12,7 +16,7 @@
 <body>
   <router-nav></router-nav>
 
-  <script type="module" src="./components/router-nav.js"></script>
+  <script type="module" src="./src/components/router-nav.js"></script>
 </body>
 
 </html>

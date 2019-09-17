@@ -96,7 +96,7 @@ class FormFavourite extends LitElement {
     render() {
         return html`
         <div class="modal">
-            <form tabindex="0" name="formFavourite" id="formFavourite">
+            <form name="formFavourite" id="formFavourite">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" placeholder="Escriba el nombre" autofocus />
                 <label for="media_type">Tipo:</label>
