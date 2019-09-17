@@ -2,12 +2,14 @@ import { LitElement, html, css } from 'lit-element';
 import { findFilmById } from '../libs/functions';
 import constants from '../constants';
 import './item-film';
+import './spin-loaded';
 
 class DetailItem extends LitElement {
     static get properties() {
         return {
             id: { type: String },
             film: { type: Object },
+            loaded: { type: Boolean },
         }
     }
 
@@ -44,6 +46,7 @@ class DetailItem extends LitElement {
         super();
         this.id = this.id || null;
         this.film = this.film || null;
+        this.loaded = false;
     }
 
     updated(changeOld) {
@@ -70,10 +73,12 @@ class DetailItem extends LitElement {
             .then((result) => {
                 const filmStorage = findFilmById(this.id);
                 this.film = { ...filmStorage ,...result, title: result.title || result.name };
+                this.loaded = true;
             });
     }
 
     render() {
+        if(!this.loaded) return html`<spin-loaded></spin-loaded>`;
         return html`
         <header>
             <a href='/'><</a>

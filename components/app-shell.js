@@ -4,6 +4,7 @@ import './seeker-films';
 import './last-searches';
 import './form-favourite';
 import './button-favourite';
+import './spin-loaded';
 
 import { saveFilmsInStorage, saveSearchInStorage, transformArrayFilmsSeries, searchInStorage, findFilmsInStorage, findAndModifyFilm, saveNewFavouriteInStorage, findFilmsFavouriteInStorage } from '../libs/functions';
 import constants from '../constants';
@@ -17,6 +18,7 @@ class AppShell extends LitElement {
             showCreateFavourites: { type: Boolean }, // booleano que permite ver la modal donde crear una peli/serie nueva
             favourites: { type: Array }, //array de favoritos
             showListFavourites: { type: Boolean }, // booleano que permite mostrar la lista de favoritos
+            loading: { type: Boolean } // booleano que indica si está cargando o no
         }
     }
 
@@ -52,6 +54,7 @@ class AppShell extends LitElement {
         this.showListFavourites = false;
         this.searches = searchInStorage('topics');
         this.showCreateFavourites = false;
+        this.loading = true;
         document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
         document.addEventListener('addFavourite', this._addFavourite);
     }
@@ -66,10 +69,12 @@ class AppShell extends LitElement {
             ${this.searches && this.searches.length ?
                 html`<last-searches @dispatchSelectLastSearch=${this._lastSearch} .searches=${this.searches}></last-searches>`
                 : ''}
-            <list-films
-                .films=${this.showListFavourites ? this.favourites : this.films}
-                notResults=${this.showListFavourites ? 'No hay favoritos' : ''}>
-            </list-films>
+            ${this.loading && this.search ? html`<spin-loaded></spin-loaded>` : 
+                html `<list-films
+                    .films=${this.showListFavourites ? this.favourites : this.films}
+                    notResults=${this.showListFavourites ? 'No hay favoritos' : ''}>
+                </list-films>`
+            }
             ${this.showCreateFavourites ? html`<form-favourite @closeModal=${this._showModalFavourites}></form-favourite>` : null}
             <button class="showModalCreateFavourites" @click=${this._showModalFavourites}>
                 ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
@@ -92,11 +97,14 @@ class AppShell extends LitElement {
             const films = findFilmsInStorage(topic);
             this.films = films;
         }
+        console.log('searchFilm');
         this.search = topic;
+        this.loading = false;
     }
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
+        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
@@ -120,6 +128,7 @@ class AppShell extends LitElement {
                 } else {
                     this.films = [];
                 }
+                this.loading = false;
             });
     }
 
@@ -138,6 +147,7 @@ class AppShell extends LitElement {
         this.search = lastSearch;
         this.films = films;
         this.showListFavourites = false;
+        this.loading = false;
     }
 
     _addFavourite({ detail: favourite }) {
