@@ -1,8 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
+import './list-films';
 import './seeker-films';
-
-import { saveFilmsInStorage, transformArrayFilmsSeries, findFilmsInStorage } from '../libs/functions';
 import constants from '../constants';
+import { saveFilmsInStorage, transformArrayFilmsSeries, findFilmsInStorage, findAndModifyFilm } from '../libs/functions';
 
 class AppShell extends LitElement {
     static get properties() {
@@ -18,12 +18,19 @@ class AppShell extends LitElement {
                 padding: 10px;
                 border-bottom: 2px solid var(--main-color);
             }
+            main {
+                background-color: var(--third-color);
+                height: 100%;
+                width: 100%;
+                margin: 0;
+            }
         `
     }
 
     constructor() {
         super();
         this.films = this.films || [];
+        document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
     }
 
     render() {
@@ -31,6 +38,9 @@ class AppShell extends LitElement {
         <header>
             <seeker-films @search=${this._searchFilm} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
         </header>
+        <main>
+            <list-films .films=${this.films}></list-films>
+        </main>
     `;
     }
 
@@ -44,10 +54,12 @@ class AppShell extends LitElement {
             const films = findFilmsInStorage(topic);
             this.films = films;
         }
+        this.search = topic;
     }
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
+        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
@@ -65,11 +77,15 @@ class AppShell extends LitElement {
                     saveFilmsInStorage(films);
                     // recuperamos de localStorage las películas
                     this.films = films;
-
                 } else {
                     this.films = [];
                 }
             });
+    }
+
+    _dispatchChangeFavourite({ detail: id }) {
+        // cambiamos si es o no favorito
+        findAndModifyFilm(id);
     }
 }
 

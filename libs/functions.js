@@ -43,3 +43,10 @@ export const findFilmsInStorage = topic => {
     }
     return [];
 }
+
+export const findAndModifyFilm = id => {
+    const myStorageFilms = searchInStorage('films');
+    const filmIndex = myStorageFilms.findIndex(storageFilm => storageFilm.id === id);
+    myStorageFilms[filmIndex].isFavourite = !myStorageFilms[filmIndex].isFavourite;
+    writeInStorage('films', myStorageFilms);
+}
