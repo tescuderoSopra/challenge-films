@@ -1,0 +1,19 @@
+{
+  "name": "first-app",
+  "version": "0.0.0",
+  "description": "Webcomponent first-app following open-wc recommendations",
+  "author": "first-app",
+  "license": "MIT",
+  "scripts": {
+    "start": "es-dev-server --app-index index.html --node-resolve --open --watch",
+    "start:compatibility": "es-dev-server --app-index index.html --compatibility all --node-resolve --open --watch"
+  },
+  "dependencies": {
+    "lit-element": "^2.0.1",
+    "lit-html": "^1.0.0",
+    "material-icons-font": "^2.0.0"
+  },
+  "devDependencies": {
+    "es-dev-server": "^1.5.0"
+  }
+}
