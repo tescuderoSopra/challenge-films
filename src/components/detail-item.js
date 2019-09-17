@@ -81,7 +81,7 @@ class DetailItem extends LitElement {
         if(!this.loaded) return html`<spin-loaded></spin-loaded>`;
         return html`
         <header>
-            <a href='/'><</a>
+            <a href='/'>&#60;</a>
         </header>
         <main>
             <item-film class="detail" withFavourites .item="${this.film}"></item-film>

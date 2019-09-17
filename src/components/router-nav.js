@@ -1,4 +1,4 @@
-import { LitElement, html, TemplateResult } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import paths from '../libs/paths';
 import { tagRef } from '../libs/functions';
 
@@ -17,6 +17,7 @@ class RouterNav extends LitElement {
 
     constructor() {
         super();
+        console.log('rouuuter');
         this.route = window.location.pathname;
         this.template = this.getImportTemplate();
         this.loaded = false;
