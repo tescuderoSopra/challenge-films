@@ -17,7 +17,6 @@ class RouterNav extends LitElement {
 
     constructor() {
         super();
-        console.log('rouuuter');
         this.route = window.location.pathname;
         this.template = this.getImportTemplate();
         this.loaded = false;
