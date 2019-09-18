@@ -86,11 +86,11 @@ class AppShell extends LitElement {
         this.showListFavourites = !this.showListFavourites;
     }
 
-    _searchFilm({ detail: topic }) {
+    _searchFilm({ detail: topic }, offline = false) {
         // recuperamos el topic para realizar la búsqueda
         // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
         // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
-        if (navigator.onLine) {
+        if (navigator.onLine && !offline) {
             this._searchFilmOnline(topic);
         } else {
             const films = findFilmsInStorage(topic);

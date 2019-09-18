@@ -1,0 +1,25 @@
+# `APP Shell`
+
+#### `show correctly`
+
+```html
+<header>
+  <seeker-films
+    buttonlabel="Buscar"
+    placeholder="Inserte un término de búsqueda"
+    search="undefined"
+  >
+  </seeker-films>
+  <button-favourite>
+  </button-favourite>
+</header>
+<main>
+  <list-films notresults="">
+  </list-films>
+  <button class="showModalCreateFavourites">
+    Añadir información
+  </button>
+</main>
+
+```
+
