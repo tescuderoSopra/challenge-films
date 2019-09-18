@@ -38,11 +38,15 @@ class AppShell extends LitElement {
             }
             main .showModalCreateFavourites {
                 position: fixed;
-                width: 100%;
+                width: 50px;
                 height: 50px;
-                border-top: 2px solid var(--main-color);
-                bottom: 0;
+                border: 2px solid var(--main-color);
+                border-radius: 50%;
+                bottom: 10px;
+                right: 10px;
                 background-color: var(--third-color);
+                font-size: var(--font-size-xl);
+                font-weight: bold;
             }
         `
     }
@@ -75,8 +79,8 @@ class AppShell extends LitElement {
                 </list-films>`
             }
             ${this.showCreateFavourites ? html`<form-favourite @addFavourite=${this._addFavourite} @closeModal=${this._showModalFavourites}></form-favourite>` : null}
-            <button class="showModalCreateFavourites" @click=${this._showModalFavourites}>
-                ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
+            <button title="Añadir información sobre una nueva película" class="showModalCreateFavourites" @click=${this._showModalFavourites}>
+               +
             </button>
         </main>
     `;

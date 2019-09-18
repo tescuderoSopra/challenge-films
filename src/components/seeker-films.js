@@ -12,6 +12,9 @@ class SeekerFilms extends LitElement {
 
   static get styles() {
     return css`
+      :host {
+        font-family: var(--font-family);
+      }
       .seeker {
         display: flex;
         justify-content: center;
@@ -20,16 +23,30 @@ class SeekerFilms extends LitElement {
       .seeker input {
         flex-grow: 1;
         padding: 10px;
-        border: 1px solid var(--border-color);
+        border: none;
+        box-shadow: 0px 6px 9px -3px var(--shadow);
         max-width: 200px;
+      }
+      .seeker input:focus {
+        box-shadow: 0px 6px 9px -3px var(--shadow-active);
+        max-width: 400px;
+        outline: none;
+      }
+      .seeker label {
+        font-size: var(--font-size-s);
+        color: var(--main-color);
+        margin-right: 20px;
       }
       .seeker button {
         flex-grow: 1;
-        margin: 10px;
+        margin: 10px 30px;
         padding: 10px 0;
         border: 1px solid var(--border-color);
-        background: transparent;
-        max-width: 50px;
+        border-radius:4px;
+        background: var(--main-color);
+        color: var(--font-color-secondary);
+        max-width: 70px;
+        cursor:pointer;
       }
     `;
   }
