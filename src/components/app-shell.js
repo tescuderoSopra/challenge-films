@@ -62,7 +62,7 @@ class AppShell extends LitElement {
     render() {
         return html`
         <header>
-            <seeker-films @search=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
+            <seeker-films @searchEvent=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
             <button-favourite @showListFavourites=${this._showListFavourites}></button-favourite>
         </header>
         <main>
