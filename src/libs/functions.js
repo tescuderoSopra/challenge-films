@@ -10,7 +10,7 @@ export const writeInStorage = (storage, data) => window.localStorage.setItem(sto
 
 export const saveFilmsInStorage = (films) => {
     let myStorage = searchInStorage('films');
-    if (myStorage) {
+    if (myStorage.length) {
         films.forEach((film, index) => {
             const storageFilm = myStorage.find(storage => storage.title === film.title);
             if (!storageFilm) {
@@ -30,7 +30,8 @@ export const saveFilmsInStorage = (films) => {
 
 export const saveNewFavouriteInStorage = (film) => {
     const myStorage = searchInStorage('films');
-    if (myStorage && !myStorage.find(storage => storage.title === film.title)) {
+    const existInStorage = myStorage.find(storage => storage.title === film.title);
+    if (myStorage && !existInStorage) {
         myStorage.push({
             ...film,
             isFavourite: true,
@@ -42,7 +43,8 @@ export const saveNewFavouriteInStorage = (film) => {
 
 export const saveSearchInStorage = topic => {
     const myStorageTopics = searchInStorage('topics');
-    if (myStorageTopics && !myStorageTopics.find(storageTopic => storageTopic.title === topic)) {
+    const existsInStorage = myStorageTopics.find(storageTopic => storageTopic.title === topic);
+    if (myStorageTopics && !existsInStorage) {
         myStorageTopics.unshift({ title: topic });
     }
 
@@ -52,7 +54,7 @@ export const saveSearchInStorage = topic => {
 
 export const findFilmsInStorage = topic => {
     const myStorage = searchInStorage('films');
-    if (myStorage) {
+    if (myStorage.length) {
         return myStorage.filter(storage => storage.title.toLowerCase().indexOf(topic.toLowerCase()) > -1);
     }
     return [];
@@ -60,7 +62,7 @@ export const findFilmsInStorage = topic => {
 
 export const findFilmsFavouriteInStorage = () => {
     const myStorage = searchInStorage('films');
-    if (myStorage) {
+    if (myStorage.length) {
         return myStorage.filter(storage => storage.isFavourite);
     }
     return [];

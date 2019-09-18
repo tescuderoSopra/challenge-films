@@ -121,7 +121,6 @@ class FormFavourite extends LitElement {
             media_type: this.shadowRoot.getElementById('media_type').value,
             provider: this.provider
         }
-        console.log('dataaas', datas);
         // addFavourite
         this.dispatchEvent(new CustomEvent('addFavourite', { detail: datas }));
         // return false;

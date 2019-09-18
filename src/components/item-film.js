@@ -40,8 +40,8 @@ class ItemFilm extends LitElement {
 
   _changeFavourite() {
     this.item.isFavourite = !this.item.isFavourite;
-    document.dispatchEvent(new CustomEvent('dispatchChangeFavourite', { detail: this.item.id }));
     this.requestUpdate();
+    document.dispatchEvent(new CustomEvent('dispatchChangeFavourite', { detail: this.item.id }));
   }
 
   _renderProvider() {

@@ -95,7 +95,7 @@ describe('APP Shell', () => {
     expect(el.films.length).to.be.equal(0);
   });
   it('add favourite', async () => {
-    window.localStorage.clear();
+    window.localStorage.removeItem("films");
     const el = (await fixture(html`
       <app-shell></app-shell>
     `));
