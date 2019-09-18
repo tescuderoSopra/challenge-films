@@ -34,13 +34,6 @@ class LastSearches extends LitElement {
         this.searches = this.searches || [];
     }
 
-    _search() {
-        const topic = this.shadowRoot.getElementById('search').value;
-        if (topic) {
-            this.dispatchEvent(new CustomEvent('search', { detail: topic }));
-        }
-    }
-
     render() {
         return html`
             <div class="searchesContainer">
