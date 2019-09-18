@@ -53,7 +53,7 @@ class SeekerFilms extends LitElement {
   _search() {
       const topic = this.shadowRoot.getElementById('search').value;
       if(topic) {
-          this.dispatchEvent(new CustomEvent('search', { detail: topic }));
+          this.dispatchEvent(new CustomEvent('searchEvent', { detail: topic }));
       }
   }
 

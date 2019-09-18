@@ -34,29 +34,21 @@ class LastSearches extends LitElement {
         this.searches = this.searches || [];
     }
 
-    _search() {
-        const topic = this.shadowRoot.getElementById('search').value;
-        if (topic) {
-            this.dispatchEvent(new CustomEvent('search', { detail: topic }));
-        }
-    }
-
     render() {
         return html`
             <div class="searchesContainer">
                 <ul>
-                    ${this.searches.map((search, index) =>
-                        html`<item-film class="searches" @click="${this.dispatchSelectLastSearch}" .item="${search}"></item-film>`
+                    ${this.searches.map((search) =>
+                        html`<item-film class="searches" @eventClick=${this.dispatchSelectLastSearch} .item="${search}"></item-film>`
                     )}
                 </ul>
             </div>
         `;
     }
 
-    dispatchSelectLastSearch({ path }) {
-        const textSearch = path[0].innerText;
-        if (textSearch) {
-            this.dispatchEvent(new CustomEvent('dispatchSelectLastSearch', { detail: textSearch }));
+    dispatchSelectLastSearch({ detail }) {
+        if (detail) {
+            this.dispatchEvent(new CustomEvent('dispatchSelectLastSearch', { detail }));
         }
     }
 

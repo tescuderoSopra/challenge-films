@@ -56,26 +56,25 @@ class AppShell extends LitElement {
         this.showCreateFavourites = false;
         this.loading = true;
         document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
-        document.addEventListener('addFavourite', this._addFavourite);
     }
 
     render() {
         return html`
         <header>
-            <seeker-films @search=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
+            <seeker-films @searchEvent=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
             <button-favourite @showListFavourites=${this._showListFavourites}></button-favourite>
         </header>
         <main>
             ${this.searches && this.searches.length ?
                 html`<last-searches @dispatchSelectLastSearch=${this._lastSearch} .searches=${this.searches}></last-searches>`
                 : ''}
-            ${this.loading && this.search ? html`<spin-loaded></spin-loaded>` : 
-                html `<list-films
+            ${this.loading && this.search ? html`<spin-loaded></spin-loaded>` :
+                html`<list-films
                     .films=${this.showListFavourites ? this.favourites : this.films}
                     notResults=${this.showListFavourites ? 'No hay favoritos' : ''}>
                 </list-films>`
             }
-            ${this.showCreateFavourites ? html`<form-favourite @closeModal=${this._showModalFavourites}></form-favourite>` : null}
+            ${this.showCreateFavourites ? html`<form-favourite @addFavourite=${this._addFavourite} @closeModal=${this._showModalFavourites}></form-favourite>` : null}
             <button class="showModalCreateFavourites" @click=${this._showModalFavourites}>
                 ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
             </button>
@@ -87,11 +86,11 @@ class AppShell extends LitElement {
         this.showListFavourites = !this.showListFavourites;
     }
 
-    _searchFilm({ detail: topic }) {
+    _searchFilm({ detail: topic }, offline = false) {
         // recuperamos el topic para realizar la búsqueda
         // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
         // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
-        if (navigator.onLine) {
+        if (navigator.onLine && !offline) {
             this._searchFilmOnline(topic);
         } else {
             const films = findFilmsInStorage(topic);
