@@ -13,6 +13,10 @@ export class FaIcon extends LitElement {
     return [
       FaStyles,
       css`
+        .fa {
+          z-index: 999;
+          display: block;
+        }
         i.active {
           color: var(--secondary-color); 
         }
@@ -23,7 +27,7 @@ export class FaIcon extends LitElement {
     this.iclass = "";
     const fontEl = document.createElement('link');
     fontEl.rel = 'stylesheet';
-    fontEl.href = '/src/styles/icons.min.css';
+    fontEl.href = './src/styles/icons.min.css';
     document.head.appendChild(fontEl);
   }
   render() {

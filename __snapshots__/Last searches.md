@@ -15,7 +15,10 @@
 ```html
 <div class="searchesContainer">
   <ul>
-    <item-film class="searches">
+    <item-film
+      class="searches"
+      withclick=""
+    >
     </item-film>
   </ul>
 </div>

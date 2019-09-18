@@ -72,7 +72,7 @@ describe('item-film', () => {
     const el = (await fixture(html`
       <item-film withFavourites .item=${{ ...film, adult: true }} loaded></item-film>
     `));
-    await el._changeFavourite();
+    await el._changeFavourite({ preventDefault: () => {} });
     expect(el.item.isFavourite).to.be.true;
   });
   it('click on item', async () => {
