@@ -98,7 +98,7 @@ class FormFavourite extends LitElement {
         <div class="modal">
             <form name="formFavourite" id="formFavourite">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" placeholder="Escriba el nombre" autofocus />
+                <input type="text" id="name" placeholder="Escriba el nombre" autofocus required />
                 <label for="media_type">Tipo:</label>
                 <select id="media_type">
                     <option value="">*</option>
@@ -115,24 +115,23 @@ class FormFavourite extends LitElement {
         </div>`;
     }
 
-    saveForm(ev) {
-        ev.preventDefault();
+    saveForm() {
         const datas = {
             name: this.shadowRoot.getElementById('name').value,
             media_type: this.shadowRoot.getElementById('media_type').value,
             provider: this.provider
         }
+        console.log('dataaas', datas);
         // addFavourite
-        document.dispatchEvent(new CustomEvent('addFavourite', { detail: datas }));
-        return false;
+        this.dispatchEvent(new CustomEvent('addFavourite', { detail: datas }));
+        // return false;
     }
 
-    closeModal(ev) {
+    closeModal() {
         this.dispatchEvent(new CustomEvent('closeModal'));
     }
 
-    newProvider(ev) {
-        ev.preventDefault();
+    newProvider() {
         const valueProvider = this.shadowRoot.getElementById('myProvider').value;
         if (valueProvider && !this.provider.find(prov => prov === valueProvider)) {
             this.provider = [...this.provider, valueProvider];

@@ -56,7 +56,6 @@ class AppShell extends LitElement {
         this.showCreateFavourites = false;
         this.loading = true;
         document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
-        document.addEventListener('addFavourite', this._addFavourite);
     }
 
     render() {
@@ -69,13 +68,13 @@ class AppShell extends LitElement {
             ${this.searches && this.searches.length ?
                 html`<last-searches @dispatchSelectLastSearch=${this._lastSearch} .searches=${this.searches}></last-searches>`
                 : ''}
-            ${this.loading && this.search ? html`<spin-loaded></spin-loaded>` : 
-                html `<list-films
+            ${this.loading && this.search ? html`<spin-loaded></spin-loaded>` :
+                html`<list-films
                     .films=${this.showListFavourites ? this.favourites : this.films}
                     notResults=${this.showListFavourites ? 'No hay favoritos' : ''}>
                 </list-films>`
             }
-            ${this.showCreateFavourites ? html`<form-favourite @closeModal=${this._showModalFavourites}></form-favourite>` : null}
+            ${this.showCreateFavourites ? html`<form-favourite @addFavourite=${this._addFavourite} @closeModal=${this._showModalFavourites}></form-favourite>` : null}
             <button class="showModalCreateFavourites" @click=${this._showModalFavourites}>
                 ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
             </button>
