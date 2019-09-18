@@ -13,10 +13,6 @@ export class FaIcon extends LitElement {
     return [
       FaStyles,
       css`
-        .fa {
-          z-index: 999;
-          display: block;
-        }
         i.active {
           color: var(--secondary-color); 
         }
