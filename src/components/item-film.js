@@ -42,6 +42,7 @@ class ItemFilm extends LitElement {
     this.item.isFavourite = !this.item.isFavourite;
     this.requestUpdate();
     document.dispatchEvent(new CustomEvent('dispatchChangeFavourite', { detail: this.item.id }));
+    return false;
   }
 
   _renderProvider() {
@@ -98,11 +99,13 @@ class ItemFilm extends LitElement {
       <li role="button" class=${this.class} @click=${this._click || null}>${this._renderItem()}</li>
     `;
   }
-  _click({ path }) {
-    const textSearch = path[0].innerText;
+  _click(ev) {
+    ev.preventDefault();
+    const textSearch = ev.path[0].innerText;
     if (textSearch) {
       this.dispatchEvent(new CustomEvent("eventClick", { detail: textSearch }));
     }
+    return false;
   }
 }
 

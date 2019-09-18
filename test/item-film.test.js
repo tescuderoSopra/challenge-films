@@ -80,7 +80,7 @@ describe('item-film', () => {
     const el = (await fixture(html`
       <item-film @eventClick=${test} .item=${film} loaded></item-film>
     `));
-    setTimeout(() => el._click({ path }));
+    setTimeout(() => el._click({ preventDefault: () => {}, path }));
     const { detail } = await oneEvent(el, 'eventClick');
     expect(detail).to.be.equal(path[0].innerText);
   });
