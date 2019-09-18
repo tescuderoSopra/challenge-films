@@ -46,7 +46,7 @@ class DetailItem extends LitElement {
         super();
         this.id = this.id || null;
         this.film = this.film || null;
-        this.loaded = false;
+        this.loaded = this.loaded || false;
     }
 
     updated(changeOld) {
