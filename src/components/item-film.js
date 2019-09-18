@@ -10,7 +10,7 @@ class ItemFilm extends LitElement {
   static get properties() {
     return {
       item: { type: Object },
-      click: { type: Function },
+      eventClick: { type: String }, // string con el custom event
       withFavourites: { type: Boolean },
       url: { type: String },
       class: { type: String },
@@ -98,8 +98,16 @@ class ItemFilm extends LitElement {
 
   render() {
     return html`
-      <li role="button" class=${this.class} @click=${this.click || null}>${this._renderItem()}</li>
+      <li role="button" class=${this.class} @click=${this._click || null}>${this._renderItem()}</li>
     `;
+  }
+  _click(ev) {
+    ev.preventDefault();
+    const { path } = ev;
+    const textSearch = path[0].innerText;
+    if (textSearch) {
+        this.dispatchEvent(new CustomEvent("eventClick", { detail: textSearch }));
+    }
   }
 }
 
