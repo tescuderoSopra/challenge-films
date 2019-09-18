@@ -38,13 +38,10 @@ class ItemFilm extends LitElement {
     return '../imgs/no-image-icon.png';
   }
 
-  _changeFavourite(ev) {
+  _changeFavourite() {
     this.item.isFavourite = !this.item.isFavourite;
-    this.requestUpdate();
-    ev.stopPropagation();
-    ev.preventDefault();
     document.dispatchEvent(new CustomEvent('dispatchChangeFavourite', { detail: this.item.id }));
-    return false;
+    this.requestUpdate();
   }
 
   _renderProvider() {
@@ -101,12 +98,10 @@ class ItemFilm extends LitElement {
       <li role="button" class=${this.class} @click=${this._click || null}>${this._renderItem()}</li>
     `;
   }
-  _click(ev) {
-    ev.preventDefault();
-    const { path } = ev;
+  _click({ path }) {
     const textSearch = path[0].innerText;
     if (textSearch) {
-        this.dispatchEvent(new CustomEvent("eventClick", { detail: textSearch }));
+      this.dispatchEvent(new CustomEvent("eventClick", { detail: textSearch }));
     }
   }
 }
