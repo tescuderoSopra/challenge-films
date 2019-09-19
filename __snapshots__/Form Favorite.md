@@ -40,6 +40,18 @@
         Película
       </option>
     </select>
+    <div id="backdrop_path">
+      <input
+        id="back_file"
+        name="files"
+        type="file"
+      >
+      <label for="back_file">
+        <strong>
+          Elija un fichero
+        </strong>
+      </label>
+    </div>
     <label for="myProvider">
       Proveedor:
     </label>

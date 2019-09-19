@@ -30,7 +30,7 @@ describe('Form Favorite', () => {
     it('add provider', async () => {
         const el = await fixture(html`
             <form-favourite @closeModal=${test} @addFavourite=${test}></form-favourite>
-  `     );
+        `);
         el.shadowRoot.getElementById('myProvider').value = 'test'
         el.newProvider({ preventDefault: () => {} });
         expect(el.shadowRoot.getElementById('myProvider').value).to.be.equal('test');

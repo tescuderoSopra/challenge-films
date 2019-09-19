@@ -215,13 +215,14 @@ class FormFavourite extends LitElement {
     saveForm(ev) {
         ev.preventDefault();
         const title = this.shadowRoot.getElementById('title').value;
+        const src = this.shadowRoot.getElementById('imageUpload') ? this.shadowRoot.getElementById('imageUpload').value : null;
         const datas = {
             title,
             media_type: this.shadowRoot.getElementById('media_type').value,
             provider: this.provider,
             overview: this.shadowRoot.getElementById('overview').value,
             id: `fv_${title.replace(/ /g, '_')}`,
-            backdrop_path: this.shadowRoot.getElementById('imageUpload').src,
+            backdrop_path: src,
         }
         // addFavourite
         this.dispatchEvent(new CustomEvent('addFavourite', { detail: datas }));

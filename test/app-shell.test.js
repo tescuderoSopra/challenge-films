@@ -73,9 +73,8 @@ describe('APP Shell', () => {
     const el = (await fixture(html`
       <app-shell></app-shell>
     `));
-    await el._searchFilm({ detail: 'game' });
-    expect(el.search).to.be.equal('game');
-    expect(el.loading).to.be.false;
+    await el._searchFilm({ detail: 'hola2' });
+    expect(el.search).to.be.equal('hola2');
     expect(el.films.length).to.be.equal(0);
   });
   it('change show favourites modal', async () => {

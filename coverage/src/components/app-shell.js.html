@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.19% </span>
+        <span class="strong">75.61% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>32/42</span>
+        <span class='fraction'>31/41</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">82.61% </span>
+        <span class="strong">86.96% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>19/23</span>
+        <span class='fraction'>20/23</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">76.92% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>10/13</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.19% </span>
+        <span class="strong">75.61% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>32/42</span>
+        <span class='fraction'>31/41</span>
       </div>
     </div>
     <p class="quiet">
@@ -295,6 +295,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -303,14 +305,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -327,7 +328,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -335,6 +335,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -353,7 +354,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -418,7 +418,7 @@ class AppShell extends LitElement {
         this.films = this.films || [];
         this.favourites = findFilmsFavouriteInStorage();
         this.showListFavourites = false;
-        this.searches = searchInStorage('topics');
+        this.searches = searchInStorage('topics').slice(0, constants.lastSearchesNumber);
         this.showCreateFavourites = false;
         this.loading = true;
     }
@@ -433,7 +433,7 @@ class AppShell extends LitElement {
             ${this.searches &amp;&amp; this.searches.length ?
 <span class="branch-0 cbranch-no" title="branch not covered" >                html`&lt;last-searches @dispatchSelectLastSearch=${this._lastSearch} .searches=${this.searches}&gt;&lt;/last-searches&gt;`</span>
                 : ''}
-            ${this.loading &amp;&amp; this.search ? <span class="branch-0 cbranch-no" title="branch not covered" >html`&lt;spin-loaded&gt;&lt;/spin-loaded&gt;` </span>:
+            ${this.loading &amp;&amp; this.search ? html`&lt;spin-loaded&gt;&lt;/spin-loaded&gt;` :
                 html`&lt;list-films
                     .films=${this.showListFavourites ? this.favourites : this.films}
                     notResults=${this.showListFavourites ? 'No hay favoritos' : ''}&gt;
@@ -452,6 +452,8 @@ class AppShell extends LitElement {
     }
 &nbsp;
     _searchFilm({ detail: topic }, offline = false) {
+        this.loading = true;
+        this.search = topic;
         // recuperamos el topic para realizar la búsqueda
         // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
         // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&amp;language=en-US&amp;query=x-men&amp;page=1&amp;include_adult=false
@@ -460,14 +462,13 @@ class AppShell extends LitElement {
         } else {
             const films = findFilmsInStorage(topic);
             this.films = films;
+            this.loading = false;
         }
-        this.search = topic;
-        this.loading = false;
+        
     }
 &nbsp;
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&amp;query=${topic}`;
         fetch(url, {
@@ -484,13 +485,13 @@ class AppShell extends LitElement {
                     // almacenamos en localstorage los datos sin machacar los favoritos
 <span class="cstat-no" title="statement not covered" >                    saveFilmsInStorage(films);</span>
                     // guardamos el topic en búsquedas recientes
-<span class="cstat-no" title="statement not covered" >                    this.searches = saveSearchInStorage(topic);</span>
                     // recuperamos de localStorage las películas
 <span class="cstat-no" title="statement not covered" >                    this.films = films;</span>
 <span class="cstat-no" title="statement not covered" >                    this.showListFavourites = false;</span>
                 } else {
 <span class="cstat-no" title="statement not covered" >                    this.films = [];</span>
                 }
+<span class="cstat-no" title="statement not covered" >                this.searches = saveSearchInStorage(topic).slice(0, constants.lastSearchesNumber);</span>
 <span class="cstat-no" title="statement not covered" >                this.loading = false;</span>
             });
     }
@@ -510,7 +511,6 @@ class AppShell extends LitElement {
 &nbsp;
     _addFavourite({ detail: favourite }) {
         // añadir un nuevo favorito
-        console.log('addFaovuirte', favourite);
         saveNewFavouriteInStorage(favourite);
         this.films = searchInStorage('films');
         this.showCreateFavourites = false;
@@ -523,7 +523,7 @@ customElements.define('app-shell', AppShell);</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 08:50:57 GMT+0200 (GMT+02:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 12:14:57 GMT+0200 (GMT+02:00)
 </div>
 </div>
 <script src="../../prettify.js"></script>
