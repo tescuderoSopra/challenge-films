@@ -41,6 +41,12 @@ describe('item-film', () => {
     expect(el.item.title).to.equal(film.title);
     expect(el).shadowDom.to.equalSnapshot();
   });
+  it('show title in dom', async () => {
+    const el = (await fixture(html`
+      <item-film .item="${film}"></item-film>
+    `));
+    expect(el.shadowRoot.querySelector('.containerItem').innerText).to.equal(film.title);
+  });
   it('show item film', async () => {
     const el = (await fixture(html`
       <item-film .item=${film} loaded></item-film>
@@ -53,6 +59,12 @@ describe('item-film', () => {
     `));
     expect(el.item.title).to.equal(film.title);
     expect(el).shadowDom.to.equalSnapshot();
+  });
+  it('show title in dom withFavourites', async () => {
+    const el = (await fixture(html`
+      <item-film withFavourites .item="${film}"></item-film>
+    `));
+    expect(el.shadowRoot.querySelector('.titleFilm').innerText).to.equal(film.title);
   });
   it('show item film withFavourites and url', async () => {
     const el = (await fixture(html`
@@ -72,7 +84,7 @@ describe('item-film', () => {
     const el = (await fixture(html`
       <item-film withFavourites .item=${{ ...film, adult: true }} loaded></item-film>
     `));
-    await el._changeFavourite();
+    await el._changeFavourite({ preventDefault: () => {} });
     expect(el.item.isFavourite).to.be.true;
   });
   it('click on item', async () => {
@@ -80,7 +92,7 @@ describe('item-film', () => {
     const el = (await fixture(html`
       <item-film @eventClick=${test} .item=${film} loaded></item-film>
     `));
-    setTimeout(() => el._click({ path }));
+    setTimeout(() => el._click({ preventDefault: () => {}, path }));
     const { detail } = await oneEvent(el, 'eventClick');
     expect(detail).to.be.equal(path[0].innerText);
   });

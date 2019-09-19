@@ -39,7 +39,7 @@ class LastSearches extends LitElement {
             <div class="searchesContainer">
                 <ul>
                     ${this.searches.map((search) =>
-                        html`<item-film class="searches" @eventClick=${this.dispatchSelectLastSearch} .item="${search}"></item-film>`
+                        html`<item-film class="searches" withClick @eventClick=${this.dispatchSelectLastSearch} .item="${search}"></item-film>`
                     )}
                 </ul>
             </div>

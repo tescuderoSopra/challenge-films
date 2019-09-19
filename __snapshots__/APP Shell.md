@@ -16,8 +16,11 @@
 <main>
   <list-films notresults="">
   </list-films>
-  <button class="showModalCreateFavourites">
-    Añadir información
+  <button
+    class="showModalCreateFavourites"
+    title="Añadir información sobre una nueva película"
+  >
+    +
   </button>
 </main>
 

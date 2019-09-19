@@ -38,11 +38,15 @@ class AppShell extends LitElement {
             }
             main .showModalCreateFavourites {
                 position: fixed;
-                width: 100%;
+                width: 50px;
                 height: 50px;
-                border-top: 2px solid var(--main-color);
-                bottom: 0;
+                border: 2px solid var(--main-color);
+                border-radius: 50%;
+                bottom: 10px;
+                right: 10px;
                 background-color: var(--third-color);
+                font-size: var(--font-size-xl);
+                font-weight: bold;
             }
         `
     }
@@ -52,10 +56,9 @@ class AppShell extends LitElement {
         this.films = this.films || [];
         this.favourites = findFilmsFavouriteInStorage();
         this.showListFavourites = false;
-        this.searches = searchInStorage('topics');
+        this.searches = searchInStorage('topics').slice(0, constants.lastSearchesNumber);
         this.showCreateFavourites = false;
         this.loading = true;
-        document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
     }
 
     render() {
@@ -75,8 +78,8 @@ class AppShell extends LitElement {
                 </list-films>`
             }
             ${this.showCreateFavourites ? html`<form-favourite @addFavourite=${this._addFavourite} @closeModal=${this._showModalFavourites}></form-favourite>` : null}
-            <button class="showModalCreateFavourites" @click=${this._showModalFavourites}>
-                ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
+            <button title="Añadir información sobre una nueva película" class="showModalCreateFavourites" @click=${this._showModalFavourites}>
+               +
             </button>
         </main>
     `;
@@ -87,6 +90,8 @@ class AppShell extends LitElement {
     }
 
     _searchFilm({ detail: topic }, offline = false) {
+        this.loading = true;
+        this.search = topic;
         // recuperamos el topic para realizar la búsqueda
         // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
         // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
@@ -95,14 +100,13 @@ class AppShell extends LitElement {
         } else {
             const films = findFilmsInStorage(topic);
             this.films = films;
+            this.loading = false;
         }
-        this.search = topic;
-        this.loading = false;
+        
     }
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
@@ -119,24 +123,19 @@ class AppShell extends LitElement {
                     // almacenamos en localstorage los datos sin machacar los favoritos
                     saveFilmsInStorage(films);
                     // guardamos el topic en búsquedas recientes
-                    this.searches = saveSearchInStorage(topic);
                     // recuperamos de localStorage las películas
                     this.films = films;
                     this.showListFavourites = false;
                 } else {
                     this.films = [];
                 }
+                this.searches = saveSearchInStorage(topic).slice(0, constants.lastSearchesNumber);
                 this.loading = false;
             });
     }
 
     _showModalFavourites() {
         this.showCreateFavourites = !this.showCreateFavourites;
-    }
-
-    _dispatchChangeFavourite({ detail: id }) {
-        // cambiamos si es o no favorito
-        findAndModifyFilm(id);
     }
 
     _lastSearch({ detail: lastSearch }) {
@@ -152,6 +151,7 @@ class AppShell extends LitElement {
         // añadir un nuevo favorito
         saveNewFavouriteInStorage(favourite);
         this.films = searchInStorage('films');
+        this.showCreateFavourites = false;
     }
 }
 

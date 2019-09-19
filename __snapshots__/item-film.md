@@ -9,6 +9,17 @@
 >
   Game of Thrones
 </li>
+```
+
+#### `show title in dom`
+
+```html
+<li
+  class="containerItem"
+  role="button"
+>
+  Game of Thrones
+</li>
 
 ```
 
@@ -21,7 +32,6 @@
 >
   Game of Thrones
 </li>
-
 ```
 
 #### `show item film withFavourites`
@@ -68,7 +78,6 @@
     </div>
   </div>
 </li>
-
 ```
 
 #### `show item film withFavourites and url`
@@ -117,7 +126,6 @@
     </div>
   </a>
 </li>
-
 ```
 
 #### `show item film adult`
@@ -169,6 +177,5 @@
     </div>
   </a>
 </li>
-
 ```
 

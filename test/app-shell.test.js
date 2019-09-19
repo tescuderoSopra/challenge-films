@@ -73,9 +73,8 @@ describe('APP Shell', () => {
     const el = (await fixture(html`
       <app-shell></app-shell>
     `));
-    await el._searchFilm({ detail: 'game' });
-    expect(el.search).to.be.equal('game');
-    expect(el.loading).to.be.false;
+    await el._searchFilm({ detail: 'hola2' });
+    expect(el.search).to.be.equal('hola2');
     expect(el.films.length).to.be.equal(0);
   });
   it('change show favourites modal', async () => {
@@ -101,15 +100,5 @@ describe('APP Shell', () => {
     `));
     el._addFavourite({ title: 'game', overview: 'test' });
     expect(el.films.length).to.be.equal(1);
-  });
-  it('change if film is favourite', async () => {
-    window.localStorage.clear();
-    window.localStorage.setItem('films', JSON.stringify([film]));
-    const el = (await fixture(html`
-      <app-shell></app-shell>
-    `));
-    el._dispatchChangeFavourite({ detail: film.id });
-    const films = JSON.parse(window.localStorage.getItem('films'));
-    expect(films[0].isFavourite).to.be.true;
   });
 });

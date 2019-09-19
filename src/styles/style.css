@@ -7,6 +7,7 @@
   /* OTHERS */
   --border-color: var(--main-color);
   /* FONTS */
+  --font-family: "Times New Roman", Times, serif;
   --font-color: var(--main-color);
   --link-color: #ee7d00;
   --font-color-secondary: #fff;
@@ -18,6 +19,10 @@
 
   /* HEIGHT */
   --height-header: 70px;
+
+  /* SHADOW */
+  --shadow: rgba(0,0,0,0.6);
+  --shadow-active: rgba(238,125,0,0.5);
 }
 
 html,

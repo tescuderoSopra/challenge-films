@@ -8,16 +8,24 @@
     id="formFavourite"
     name="formFavourite"
   >
-    <label for="name">
+    <label for="title">
       Nombre:
     </label>
     <input
       autofocus=""
-      id="name"
+      id="title"
       placeholder="Escriba el nombre"
       required=""
       type="text"
     >
+    <label for="overview">
+      Descripción:
+    </label>
+    <textarea
+      id="overview"
+      placeholder="Escriba el su descripción"
+    >
+    </textarea>
     <label for="media_type">
       Tipo:
     </label>
@@ -32,6 +40,18 @@
         Película
       </option>
     </select>
+    <div id="backdrop_path">
+      <input
+        id="back_file"
+        name="files"
+        type="file"
+      >
+      <label for="back_file">
+        <strong>
+          Elija un fichero
+        </strong>
+      </label>
+    </div>
     <label for="myProvider">
       Proveedor:
     </label>

@@ -10,7 +10,7 @@ class ItemFilm extends LitElement {
   static get properties() {
     return {
       item: { type: Object },
-      eventClick: { type: String }, // string con el custom event
+      withClick: { type: Boolean }, // si lleva click o no
       withFavourites: { type: Boolean },
       url: { type: String },
       class: { type: String },
@@ -33,15 +33,20 @@ class ItemFilm extends LitElement {
 
   _getUrlImg() {
     if (this.item.backdrop_path && navigator.onLine) {
+      if(this.item.backdrop_path.includes('data:image')) {
+        return this.item.backdrop_path;
+      }
       return `${constants.urlImage}/${this.item.backdrop_path}`;
     }
-    return '../imgs/no-image-icon.png';
+    return '/src/imgs/no-image-icon.png';
   }
 
-  _changeFavourite() {
+  _changeFavourite(ev) {
+    ev.preventDefault();
     this.item.isFavourite = !this.item.isFavourite;
     this.requestUpdate();
     document.dispatchEvent(new CustomEvent('dispatchChangeFavourite', { detail: this.item.id }));
+    return false;
   }
 
   _renderProvider() {
@@ -95,14 +100,17 @@ class ItemFilm extends LitElement {
 
   render() {
     return html`
-      <li role="button" class=${this.class} @click=${this._click || null}>${this._renderItem()}</li>
+      <li role="button" @click=${this.withClick ? this._click : null} class=${this.class}>${this._renderItem()}</li>
     `;
   }
-  _click({ path }) {
-    const textSearch = path[0].innerText;
+
+  _click(ev) {
+    ev.preventDefault();
+    const textSearch = ev.path[0].innerText;
     if (textSearch) {
       this.dispatchEvent(new CustomEvent("eventClick", { detail: textSearch }));
     }
+    return false;
   }
 }
 

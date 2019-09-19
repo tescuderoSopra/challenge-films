@@ -9,7 +9,7 @@ describe('Button Favorite', () => {
     `));
     expect(el).shadowDom.to.equalSnapshot();
   });
-  it('click on button dispatch event', async () => {
+  it('dispatch event showListFavourites', async () => {
       const el = await fixture(html`
       <button-favourite></button-favourite>
     `);
@@ -17,4 +17,12 @@ describe('Button Favorite', () => {
     const { detail } = await oneEvent(el, 'showListFavourites');
     expect(detail).to.be.null;
   });
+  it('click on button dispatch event', async () => {
+    const el = await fixture(html`
+    <button-favourite></button-favourite>
+  `);
+  setTimeout(() => el.shadowRoot.querySelector('button').click());
+  const { detail } = await oneEvent(el, 'showListFavourites');
+  expect(detail).to.be.null;
+});
 });
