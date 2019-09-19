@@ -2,7 +2,8 @@ const CACHE_NAME = 'cache-challenge';
 self.addEventListener('install', (event) => {
     // Perform install steps
     const urlsToCache = [
-        '/'
+        '/',
+        '/detail'
     ];
     event.waitUntil(
         caches.open(CACHE_NAME)
