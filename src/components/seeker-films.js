@@ -27,11 +27,6 @@ class SeekerFilms extends LitElement {
         box-shadow: 0px 6px 9px -3px var(--shadow);
         max-width: 200px;
       }
-      .seeker input:focus {
-        box-shadow: 0px 6px 9px -3px var(--shadow-active);
-        max-width: 400px;
-        outline: none;
-      }
       .seeker label {
         font-size: var(--font-size-s);
         color: var(--main-color);

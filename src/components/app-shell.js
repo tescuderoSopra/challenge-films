@@ -90,6 +90,8 @@ class AppShell extends LitElement {
     }
 
     _searchFilm({ detail: topic }, offline = false) {
+        this.loading = true;
+        this.search = topic;
         // recuperamos el topic para realizar la búsqueda
         // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
         // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
@@ -98,14 +100,13 @@ class AppShell extends LitElement {
         } else {
             const films = findFilmsInStorage(topic);
             this.films = films;
+            this.loading = false;
         }
-        this.search = topic;
-        this.loading = false;
+        
     }
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        this.loading = true;
         const { urlAPI, urlSearch, multi, APIkey } = constants;
         const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
@@ -150,6 +151,7 @@ class AppShell extends LitElement {
         // añadir un nuevo favorito
         saveNewFavouriteInStorage(favourite);
         this.films = searchInStorage('films');
+        this.showCreateFavourites = false;
     }
 }
 

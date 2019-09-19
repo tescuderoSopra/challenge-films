@@ -25,14 +25,14 @@
         <span class='fraction'>32/42</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">84% </span>
+        <span class="strong">82.61% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>21/25</span>
+        <span class='fraction'>19/23</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">78.57% </span>
+        <span class="strong">76.92% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>11/14</span>
+        <span class='fraction'>10/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">76.19% </span>
@@ -253,18 +253,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -342,11 +345,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -355,6 +353,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -400,11 +400,15 @@ class AppShell extends LitElement {
             }
             main .showModalCreateFavourites {
                 position: fixed;
-                width: 100%;
+                width: 50px;
                 height: 50px;
-                border-top: 2px solid var(--main-color);
-                bottom: 0;
+                border: 2px solid var(--main-color);
+                border-radius: 50%;
+                bottom: 10px;
+                right: 10px;
                 background-color: var(--third-color);
+                font-size: var(--font-size-xl);
+                font-weight: bold;
             }
         `
     }
@@ -417,7 +421,6 @@ class AppShell extends LitElement {
         this.searches = searchInStorage('topics');
         this.showCreateFavourites = false;
         this.loading = true;
-        document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
     }
 &nbsp;
     render() {
@@ -437,8 +440,8 @@ class AppShell extends LitElement {
                 &lt;/list-films&gt;`
             }
             ${this.showCreateFavourites ? html`&lt;form-favourite @addFavourite=${this._addFavourite} @closeModal=${this._showModalFavourites}&gt;&lt;/form-favourite&gt;` : null}
-            &lt;button class="showModalCreateFavourites" @click=${this._showModalFavourites}&gt;
-                ${this.showCreateFavourites ? html`Ocultar` : html`Añadir`} información
+            &lt;button title="Añadir información sobre una nueva película" class="showModalCreateFavourites" @click=${this._showModalFavourites}&gt;
+               +
             &lt;/button&gt;
         &lt;/main&gt;
     `;
@@ -496,11 +499,6 @@ class AppShell extends LitElement {
         this.showCreateFavourites = !this.showCreateFavourites;
     }
 &nbsp;
-    _dispatchChangeFavourite({ detail: id }) {
-        // cambiamos si es o no favorito
-        findAndModifyFilm(id);
-    }
-&nbsp;
     _lastSearch({ detail: lastSearch }) {
         // this.films será lastSearch.films
         const films = findFilmsInStorage(lastSearch);
@@ -512,8 +510,10 @@ class AppShell extends LitElement {
 &nbsp;
     _addFavourite({ detail: favourite }) {
         // añadir un nuevo favorito
+        console.log('addFaovuirte', favourite);
         saveNewFavouriteInStorage(favourite);
         this.films = searchInStorage('films');
+        this.showCreateFavourites = false;
     }
 }
 &nbsp;
@@ -523,7 +523,7 @@ customElements.define('app-shell', AppShell);</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Sep 18 2019 16:09:57 GMT+0200 (GMT+02:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 08:50:57 GMT+0200 (GMT+02:00)
 </div>
 </div>
 <script src="../../prettify.js"></script>

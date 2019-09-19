@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">73.91% </span>
+        <span class="strong">69.23% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>17/23</span>
+        <span class='fraction'>18/26</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">82.35% </span>
+        <span class="strong">78.95% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>14/17</span>
+        <span class='fraction'>15/19</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">66.67% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>6/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">72.73% </span>
+        <span class="strong">68% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>16/22</span>
+        <span class='fraction'>17/25</span>
       </div>
     </div>
     <p class="quiet">
@@ -138,7 +138,13 @@
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
 <a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -198,6 +204,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -212,6 +220,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,17 +301,19 @@ class DetailItem extends LitElement {
 &nbsp;
     _getDetail() {
         const storageFilm = findFilmById(this.id);
-        const { urlAPI, urlTV, urlMovie, APIkey } = constants;
-        let url = `${urlAPI}/${urlMovie}/${this.id}?api_key=${APIkey}`;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(storageFilm.media_type === 'tv') {
-<span class="cstat-no" title="statement not covered" >            url = `${urlAPI}/${urlTV}/${this.id}?api_key=${APIkey}`;</span>
-        }
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(this.id.indexOf('fv') === -1) {
+&nbsp;
+            const { urlAPI, urlTV, urlMovie, APIkey } = constants;
+            let url = `${urlAPI}/${urlMovie}/${this.id}?api_key=${APIkey}`;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if(storageFilm.media_type === 'tv') {
+<span class="cstat-no" title="statement not covered" >                url = `${urlAPI}/${urlTV}/${this.id}?api_key=${APIkey}`;</span>
             }
-        })
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; <span class="cstat-no" title="statement not covered" >response.json())</span>
             .catch(<span class="fstat-no" title="function not covered" >ex</span> =&gt; <span class="cstat-no" title="statement not covered" >console.log('ex', ex))</span>
             .then(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {
@@ -307,6 +321,10 @@ class DetailItem extends LitElement {
 <span class="cstat-no" title="statement not covered" >                this.film = { ...filmStorage ,...result, title: result.title || result.name };</span>
 <span class="cstat-no" title="statement not covered" >                this.loaded = true;</span>
             });
+        } else {
+<span class="cstat-no" title="statement not covered" >            this.film = storageFilm;</span>
+<span class="cstat-no" title="statement not covered" >            this.loaded = true;</span>
+        }
     }
 &nbsp;
     render() {
@@ -328,7 +346,7 @@ customElements.define('detail-item', DetailItem);</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Sep 18 2019 16:09:57 GMT+0200 (GMT+02:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 08:50:57 GMT+0200 (GMT+02:00)
 </div>
 </div>
 <script src="../../prettify.js"></script>

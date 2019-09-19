@@ -8,16 +8,24 @@
     id="formFavourite"
     name="formFavourite"
   >
-    <label for="name">
+    <label for="title">
       Nombre:
     </label>
     <input
       autofocus=""
-      id="name"
+      id="title"
       placeholder="Escriba el nombre"
       required=""
       type="text"
     >
+    <label for="overview">
+      Descripción:
+    </label>
+    <textarea
+      id="overview"
+      placeholder="Escriba el su descripción"
+    >
+    </textarea>
     <label for="media_type">
       Tipo:
     </label>

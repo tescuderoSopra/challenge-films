@@ -57,17 +57,19 @@ class DetailItem extends LitElement {
 
     _getDetail() {
         const storageFilm = findFilmById(this.id);
-        const { urlAPI, urlTV, urlMovie, APIkey } = constants;
-        let url = `${urlAPI}/${urlMovie}/${this.id}?api_key=${APIkey}`;
-        if(storageFilm.media_type === 'tv') {
-            url = `${urlAPI}/${urlTV}/${this.id}?api_key=${APIkey}`;
-        }
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+        if(this.id.indexOf('fv') === -1) {
+
+            const { urlAPI, urlTV, urlMovie, APIkey } = constants;
+            let url = `${urlAPI}/${urlMovie}/${this.id}?api_key=${APIkey}`;
+            if(storageFilm.media_type === 'tv') {
+                url = `${urlAPI}/${urlTV}/${this.id}?api_key=${APIkey}`;
             }
-        })
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(response => response.json())
             .catch(ex => console.log('ex', ex))
             .then((result) => {
@@ -75,6 +77,10 @@ class DetailItem extends LitElement {
                 this.film = { ...filmStorage ,...result, title: result.title || result.name };
                 this.loaded = true;
             });
+        } else {
+            this.film = storageFilm;
+            this.loaded = true;
+        }
     }
 
     render() {

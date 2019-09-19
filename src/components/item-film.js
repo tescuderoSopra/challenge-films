@@ -33,6 +33,9 @@ class ItemFilm extends LitElement {
 
   _getUrlImg() {
     if (this.item.backdrop_path && navigator.onLine) {
+      if(this.item.backdrop_path.includes('data:image')) {
+        return this.item.backdrop_path;
+      }
       return `${constants.urlImage}/${this.item.backdrop_path}`;
     }
     return '/src/imgs/no-image-icon.png';

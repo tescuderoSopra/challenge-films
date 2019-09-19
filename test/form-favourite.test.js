@@ -23,7 +23,7 @@ describe('Form Favorite', () => {
         const el = await fixture(html`
             <form-favourite @closeModal=${test} @addFavourite=${test}></form-favourite>
   `     );
-        setTimeout(() => el.saveForm());
+        setTimeout(() => el.saveForm({ preventDefault: () => {} }));
         const { detail } = await oneEvent(el, 'addFavourite');
         expect(detail).to.be.an('object');
     });
@@ -32,7 +32,7 @@ describe('Form Favorite', () => {
             <form-favourite @closeModal=${test} @addFavourite=${test}></form-favourite>
   `     );
         el.shadowRoot.getElementById('myProvider').value = 'test'
-        el.newProvider();
+        el.newProvider({ preventDefault: () => {} });
         expect(el.shadowRoot.getElementById('myProvider').value).to.be.equal('test');
     });
 });
