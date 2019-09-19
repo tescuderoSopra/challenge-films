@@ -73,10 +73,16 @@ class SeekerFilms extends LitElement {
     return html`
       <div class="seeker">
         <label for="search">Realice una búsqueda</label>
-        <input id="search" placeholder=${this.placeholder} defaultValue=${this.search} />
+        <input @keyup=${this._detectEnterPress} id="search" placeholder=${this.placeholder} defaultValue=${this.search} />
         <button title="${this.buttonLabel}" @click="${this._search}">${this.buttonLabel}</button>
       </div>
     `;
+  }
+
+  _detectEnterPress({ keyCode }) {
+    if(keyCode === 13) {
+      this.shadowRoot.querySelector('button').click();
+    }
   }
 }
 
