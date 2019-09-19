@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="description" content="Buscador de películas">
-  <link rel="preload" as="style" type="text/css" href="/src/styles/style.css" onload="this.onload =null; this.rel='stylesheet'" />
+  <link rel="preload" as="style" type="text/css" href="/src/styles/style.css"
+    onload="this.onload =null; this.rel='stylesheet'" />
 
   <link rel="preload" href="/src/styles/icons.min.css" as="style" />
 
@@ -17,6 +18,19 @@
   <router-nav></router-nav>
 
   <script type="module" src="./src/components/router-nav.js"></script>
+  <script type="module">
+    import { findAndModifyFilm } from "./src/libs/functions.js";
+
+    const dispatchChangeFavourite = ({ detail: id }) => {
+      // cambiamos si es o no favorito
+      console.log('dispaaatch', id);
+      findAndModifyFilm(id);
+    };
+
+    document.addEventListener('dispatchChangeFavourite', dispatchChangeFavourite);
+
+
+  </script>
 </body>
 
 </html>

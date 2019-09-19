@@ -59,7 +59,6 @@ class AppShell extends LitElement {
         this.searches = searchInStorage('topics');
         this.showCreateFavourites = false;
         this.loading = true;
-        document.addEventListener('dispatchChangeFavourite', this._dispatchChangeFavourite);
     }
 
     render() {
@@ -136,11 +135,6 @@ class AppShell extends LitElement {
 
     _showModalFavourites() {
         this.showCreateFavourites = !this.showCreateFavourites;
-    }
-
-    _dispatchChangeFavourite({ detail: id }) {
-        // cambiamos si es o no favorito
-        findAndModifyFilm(id);
     }
 
     _lastSearch({ detail: lastSearch }) {

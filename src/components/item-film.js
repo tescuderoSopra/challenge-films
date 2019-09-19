@@ -35,7 +35,7 @@ class ItemFilm extends LitElement {
     if (this.item.backdrop_path && navigator.onLine) {
       return `${constants.urlImage}/${this.item.backdrop_path}`;
     }
-    return '../imgs/no-image-icon.png';
+    return '/src/imgs/no-image-icon.png';
   }
 
   _changeFavourite(ev) {
