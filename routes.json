@@ -1,0 +1,5 @@
+{
+    "/search/multi?api_key=:apiKey&query=:id": "/films/:id",
+    "/movie/:id?api_key=:apiKey": "/films/:id",
+    "/tv/:id?api_key=:apiKey": "/films/:id"
+  }

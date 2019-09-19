@@ -11,7 +11,9 @@
     "dev": "webpack-dev-server --env.mode development --compress --watch --open",
     "start:build": "es-dev-server --app-index dist/index.html --open",
     "start": "es-dev-server --app-index index.html --node-resolve --open --watch",
-    "start:compatibility": "es-dev-server --app-index index.html --compatibility all --node-resolve --open --watch"
+    "start:compatibility": "es-dev-server --app-index index.html --compatibility all --node-resolve --open --watch",
+    "sandbox": "webpack-dev-server --env.mode development --compress NODE_ENV=sandbox",
+    "jsonServer": "json-server db.json --routes routes.json"
   },
   "dependencies": {
     "lit-element": "^2.0.1",
@@ -27,6 +29,7 @@
     "deepmerge": "^4.0.0",
     "es-dev-server": "^1.18.0",
     "html-webpack-plugin": "^3.2.0",
+    "json-server": "^0.15.1",
     "karma": "^4.3.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
