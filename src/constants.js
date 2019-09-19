@@ -5,7 +5,8 @@ const constants = {
     urlTV: "tv",
     urlMovie: "movie",
     multi: "multi",
-    APIkey: "96befef4ed5f899937a3ab357c0e2a4f"
+    APIkey: "96befef4ed5f899937a3ab357c0e2a4f",
+    lastSearchesNumber: 5,
 };
 
 export default constants;

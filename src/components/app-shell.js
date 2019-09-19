@@ -56,7 +56,7 @@ class AppShell extends LitElement {
         this.films = this.films || [];
         this.favourites = findFilmsFavouriteInStorage();
         this.showListFavourites = false;
-        this.searches = searchInStorage('topics');
+        this.searches = searchInStorage('topics').slice(0, constants.lastSearchesNumber);
         this.showCreateFavourites = false;
         this.loading = true;
     }
@@ -123,13 +123,13 @@ class AppShell extends LitElement {
                     // almacenamos en localstorage los datos sin machacar los favoritos
                     saveFilmsInStorage(films);
                     // guardamos el topic en búsquedas recientes
-                    this.searches = saveSearchInStorage(topic);
                     // recuperamos de localStorage las películas
                     this.films = films;
                     this.showListFavourites = false;
                 } else {
                     this.films = [];
                 }
+                this.searches = saveSearchInStorage(topic).slice(0, constants.lastSearchesNumber);
                 this.loading = false;
             });
     }
