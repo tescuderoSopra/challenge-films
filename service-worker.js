@@ -13,6 +13,11 @@ self.addEventListener('install', (event) => {
     );
 });
 
+const isImage = (fetchRequest) => {
+  return fetchRequest.method === "GET" 
+         && fetchRequest.destination === "image";
+}
+
 self.addEventListener('fetch', (event) => {
     event.respondWith(
       caches.match(event.request)
@@ -24,7 +29,9 @@ self.addEventListener('fetch', (event) => {
   
           return fetch(fetchRequest).then(
             function(response) {
-              if(!response || response.status !== 200) {
+              if(!response || response.status !== 200
+                || (response.type !== 'basic' && !isImage(event.request))
+              ) {
                 return response;
               }
               var responseToCache = response.clone();
