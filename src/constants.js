@@ -1,7 +1,6 @@
 
 const isDebug = window.mode === 'development';
 
-
 let endpoints = {
     urlSearch: "search",
     urlTV: "tv",
@@ -18,7 +17,7 @@ const remote = {
 };
 
 const local = {
-    base: 'localhost',
+    base: 'http://localhost:3000',
     APIkey: 'testAPI',
     ...endpoints
 }
