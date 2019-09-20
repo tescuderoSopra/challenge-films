@@ -1,7 +1,7 @@
 import { css } from 'lit-element';
 
 const styles = css`
-  .detail {
+  .card {
     border: 1px solid var(--darken-third-color);
     margin: 25px;
     padding: 0 15px;
@@ -9,46 +9,46 @@ const styles = css`
     position: relative;
   }
 
-  .detail .contain .overviewImg {
+  .card .contain .overviewImg {
     font-style: italic;
   }
 
-  .detail .titleFavourite {
+  .card .titleFavourite {
     display: flex;
     justify-content: flex-start;
     align-items: baseline;
     align-content: center;
   }
 
-  .detail .titleFavourite input {
+  .card .titleFavourite input {
     margin-left: 20px;
   }
 
-  .detail .overviewImg {
+  .card .overviewImg {
     display: inline-flex;
     align-items: center;
 
   }
 
-  .detail .overviewImg .overview {
+  .card .overviewImg .overview {
     
     width: calc(100% - 80px);
     margin-left: 20px;
   }
 
-  .detail .overviewImg div {
+  .card .overviewImg div {
     border-radius: 50%;
     width: 50px;
     height: 50px;
   }
 
-  .detail .overviewImg div img {
+  .card .overviewImg div img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
   }
 
-  .detail .circle {
+  .card .circle {
     position: absolute;
     top: -10px;
     right: -10px;
