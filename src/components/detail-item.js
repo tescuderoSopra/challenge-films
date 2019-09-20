@@ -59,10 +59,10 @@ class DetailItem extends LitElement {
         const storageFilm = findFilmById(this.id);
         if(this.id.indexOf('fv') === -1) {
 
-            const { urlAPI, urlTV, urlMovie, APIkey } = constants;
-            let url = `${urlAPI}/${urlMovie}/${this.id}?api_key=${APIkey}`;
+            const { base, urlTV, urlMovie, APIkey } = constants;
+            let url = `${base}/${urlMovie}/${this.id}?api_key=${APIkey}`;
             if(storageFilm.media_type === 'tv') {
-                url = `${urlAPI}/${urlTV}/${this.id}?api_key=${APIkey}`;
+                url = `${base}/${urlTV}/${this.id}?api_key=${APIkey}`;
             }
             fetch(url, {
                 method: 'GET',

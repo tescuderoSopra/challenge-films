@@ -1,0 +1,17 @@
+{
+  "films": [
+    {
+      "id": "1",
+      "title": "hello",
+      "media_type": "tv"
+    },
+    {
+      "id": "2",
+      "title": "aaa"
+    }
+  ],
+  "profile": {
+    "name": "typicode",
+    "id": "2"
+  }
+}
