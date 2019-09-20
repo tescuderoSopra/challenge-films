@@ -114,13 +114,10 @@ class AppShell extends LitElement {
             headers: {
                 'Content-Type': 'application/json',
             },
-            mode: 'no-cors'
         })
-            .then(response => {console.log('response', response); return response.json()})
+            .then(response => response.json())
             .catch(ex => console.log('ex', ex))
-            .then((rest) => {
-                console.log('reeeest', rest);
-                const { total_results, results } = rest;
+            .then(({ total_results, results }) => {
                 if (total_results > 0) {
                     let films = transformArrayFilmsSeries(results);
                     // almacenamos en localstorage los datos sin machacar los favoritos

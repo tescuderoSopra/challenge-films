@@ -27,7 +27,6 @@ if(isDebug) {
 } else {
     endpoints = { ...endpoints, ...remote };
 }
-console.log(endpoints);
 
 export default endpoints;
 

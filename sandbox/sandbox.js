@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
+const cors = require('cors');
 
 /*
 
@@ -11,6 +12,8 @@ const fs = require('fs');
 */
 
 const readFile = () => JSON.parse(fs.readFileSync(`${__dirname}/db.json`));
+
+app.use(cors())
 
 app.get('/search/multi', (req, res) => {
     if(req.query.api_key && req.query.query) {

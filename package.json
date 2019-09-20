@@ -25,6 +25,7 @@
     "@open-wc/testing-karma": "^3.1.33",
     "@open-wc/webpack-index-html-plugin": "^1.4.1",
     "copy-webpack-plugin": "^5.0.4",
+    "cors": "^2.8.5",
     "deepmerge": "^4.0.0",
     "es-dev-server": "^1.18.0",
     "html-webpack-plugin": "^3.2.0",
