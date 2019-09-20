@@ -6,7 +6,7 @@ import './form-favourite';
 import './button-favourite';
 import './spin-loaded';
 
-import { saveFilmsInStorage, saveSearchInStorage, transformArrayFilmsSeries, searchInStorage, findFilmsInStorage, findAndModifyFilm, saveNewFavouriteInStorage, findFilmsFavouriteInStorage } from '../libs/functions';
+import { saveFilmsInStorage, saveSearchInStorage, transformArrayFilmsSeries, searchInStorage, findFilmsInStorage, saveNewFavouriteInStorage, findFilmsFavouriteInStorage } from '../libs/functions';
 import constants from '../constants';
 
 class AppShell extends LitElement {
@@ -95,14 +95,7 @@ class AppShell extends LitElement {
         // recuperamos el topic para realizar la búsqueda
         // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
         // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
-        if (navigator.onLine && !offline) {
-            this._searchFilmOnline(topic);
-        } else {
-            const films = findFilmsInStorage(topic);
-            this.films = films;
-            this.loading = false;
-        }
-        
+        this._searchFilmOnline(topic);
     }
 
     _searchFilmOnline(topic) {
