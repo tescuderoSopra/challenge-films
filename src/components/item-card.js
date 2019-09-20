@@ -31,7 +31,7 @@ class ItemCard extends LitElement {
       if (this.item.backdrop_path.includes('data:image')) {
         return this.item.backdrop_path;
       }
-      return `${constants.urlImage}/${this.item.backdrop_path}`;
+      return `${constants.urlImage}${this.item.backdrop_path}`;
     }
     return '/src/imgs/no-image-icon.png';
   }
