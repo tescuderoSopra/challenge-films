@@ -12,8 +12,7 @@
     "start:build": "es-dev-server --app-index dist/index.html --open",
     "start": "es-dev-server --app-index index.html --node-resolve --open --watch",
     "start:compatibility": "es-dev-server --app-index index.html --compatibility all --node-resolve --open --watch",
-    "sandbox": "webpack-dev-server --env.mode development --compress NODE_ENV=sandbox",
-    "jsonServer": "json-server db.json --routes routes.json"
+    "sandbox": "node sandbox/sandbox.js"
   },
   "dependencies": {
     "lit-element": "^2.0.1",
