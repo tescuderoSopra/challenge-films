@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75.61% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>31/41</span>
+        <span class='fraction'>30/40</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">86.96% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>10/13</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75.61% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>31/41</span>
+        <span class='fraction'>30/40</span>
       </div>
     </div>
     <p class="quiet">
@@ -201,9 +201,7 @@
 <a name='L153'></a><a href='#L153'>153</a>
 <a name='L154'></a><a href='#L154'>154</a>
 <a name='L155'></a><a href='#L155'>155</a>
-<a name='L156'></a><a href='#L156'>156</a>
-<a name='L157'></a><a href='#L157'>157</a>
-<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L156'></a><a href='#L156'>156</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -297,16 +295,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -368,7 +364,7 @@ import './form-favourite';
 import './button-favourite';
 import './spin-loaded';
 &nbsp;
-import { saveFilmsInStorage, saveSearchInStorage, transformArrayFilmsSeries, searchInStorage, findFilmsInStorage, findAndModifyFilm, saveNewFavouriteInStorage, findFilmsFavouriteInStorage } from '../libs/functions';
+import { saveFilmsInStorage, saveSearchInStorage, transformArrayFilmsSeries, searchInStorage, findFilmsInStorage, saveNewFavouriteInStorage, findFilmsFavouriteInStorage } from '../libs/functions';
 import constants from '../constants';
 &nbsp;
 class AppShell extends LitElement {
@@ -454,28 +450,26 @@ class AppShell extends LitElement {
     _searchFilm({ detail: topic }, offline = false) {
         this.loading = true;
         this.search = topic;
-        // recuperamos el topic para realizar la búsqueda
-        // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
-        // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&amp;language=en-US&amp;query=x-men&amp;page=1&amp;include_adult=false
-        if (navigator.onLine &amp;&amp; !offline) {
+        if(navigator.onLine &amp;&amp; !offline) {
+            // recuperamos el topic para realizar la búsqueda
+            // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
+            // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&amp;language=en-US&amp;query=x-men&amp;page=1&amp;include_adult=false
             this._searchFilmOnline(topic);
         } else {
-            const films = findFilmsInStorage(topic);
-            this.films = films;
+            this.films = findFilmsInStorage(topic);
             this.loading = false;
         }
-        
     }
 &nbsp;
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        const { urlAPI, urlSearch, multi, APIkey } = constants;
-        const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&amp;query=${topic}`;
+        const { base, urlSearch, multi, APIkey } = constants;
+        const url = `${base}/${urlSearch}/${multi}?api_key=${APIkey}&amp;query=${topic}`;
         fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         })
             .then(<span class="fstat-no" title="function not covered" >re</span>sponse =&gt; <span class="cstat-no" title="statement not covered" >response.json())</span>
             .catch(<span class="fstat-no" title="function not covered" >ex</span> =&gt; <span class="cstat-no" title="statement not covered" >console.log('ex', ex))</span>
@@ -523,7 +517,7 @@ customElements.define('app-shell', AppShell);</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 19 2019 12:14:57 GMT+0200 (GMT+02:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Sep 23 2019 09:21:11 GMT+0200 (GMT+02:00)
 </div>
 </div>
 <script src="../../prettify.js"></script>
