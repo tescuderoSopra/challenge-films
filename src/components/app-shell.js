@@ -100,13 +100,13 @@ class AppShell extends LitElement {
 
     _searchFilmOnline(topic) {
         // buscamos las películas asociadas al topic
-        const { urlAPI, urlSearch, multi, APIkey } = constants;
-        const url = `${urlAPI}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
+        const { base, urlSearch, multi, APIkey } = constants;
+        const url = `${base}/${urlSearch}/${multi}?api_key=${APIkey}&query=${topic}`;
         fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         })
             .then(response => response.json())
             .catch(ex => console.log('ex', ex))

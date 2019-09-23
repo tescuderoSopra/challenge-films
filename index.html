@@ -28,7 +28,9 @@
 
 <body>
   <router-nav></router-nav>
-
+  <script>
+    window.mode = <%= JSON.stringify(htmlWebpackPlugin.options.mode) %>;
+  </script>
   <script type="module" src="./src/components/router-nav.js"></script>
   <script type="module">
     import { findAndModifyFilm } from "./src/libs/functions.js";

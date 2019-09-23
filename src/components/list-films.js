@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import './item-film';
+import './item-card';
 
 class ListFilms extends LitElement {
 
@@ -44,7 +44,7 @@ class ListFilms extends LitElement {
             return html`
                 <ul>
                     ${this.films.map(film => html`
-                        <item-film withFavourites class="detail" .item="${film}" url="/detail/${film.id}"></item-film>`
+                        <item-card .item="${film}" url="/detail/${film.id}"></item-card>`
             )}
                 </ul>`;
         }

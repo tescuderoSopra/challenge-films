@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { findFilmById } from '../libs/functions';
 import constants from '../constants';
-import './item-film';
+import './item-card';
 import './spin-loaded';
 
 class DetailItem extends LitElement {
@@ -59,10 +59,10 @@ class DetailItem extends LitElement {
         const storageFilm = findFilmById(this.id);
         if(this.id.indexOf('fv') === -1) {
 
-            const { urlAPI, urlTV, urlMovie, APIkey } = constants;
-            let url = `${urlAPI}/${urlMovie}/${this.id}?api_key=${APIkey}`;
+            const { base, urlTV, urlMovie, APIkey } = constants;
+            let url = `${base}/${urlMovie}/${this.id}?api_key=${APIkey}`;
             if(storageFilm.media_type === 'tv') {
-                url = `${urlAPI}/${urlTV}/${this.id}?api_key=${APIkey}`;
+                url = `${base}/${urlTV}/${this.id}?api_key=${APIkey}`;
             }
             fetch(url, {
                 method: 'GET',
@@ -90,7 +90,7 @@ class DetailItem extends LitElement {
             <a href='/'>&#60;</a>
         </header>
         <main>
-            <item-film class="detail" withFavourites .item="${this.film}"></item-film>
+            <item-card .item="${this.film}"></item-card>
         </main>
         `;
     }
