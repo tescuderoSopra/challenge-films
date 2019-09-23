@@ -24,7 +24,7 @@ class RouterNav extends LitElement {
     }
 
     getImportTemplate() {
-        const pathBrowser = window.location.pathname;
+        const pathBrowser = this.route;
         const splitPath = pathBrowser.split('/');
         const componentName = splitPath[1];
         const routerFind = Object.keys(paths).find(path => path.indexOf(componentName) > -1);

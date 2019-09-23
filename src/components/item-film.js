@@ -33,6 +33,7 @@ class itemFilm extends LitElement {
   _click(ev) {
     ev.preventDefault();
     const textSearch = ev.path[0].innerText;
+    // TODO: SAFARI
     if (textSearch) {
       this.dispatchEvent(new CustomEvent("eventClick", { detail: textSearch }));
     }

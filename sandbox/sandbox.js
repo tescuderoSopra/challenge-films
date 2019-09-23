@@ -30,7 +30,7 @@ app.get('/search/multi', (req, res) => {
 app.get('/movie/:id', (req, res) => {
     if (req.query.api_key) {
         const json = readFile();
-        const result = json.films.find(film => film.id === req.params.id && film.media_type === 'movie');
+        const result = json.films.find(film => film.id.toString() === req.params.id && film.media_type === 'movie');
         res.send(JSON.stringify(result));
     }
     res.status(404).send();
@@ -39,7 +39,7 @@ app.get('/movie/:id', (req, res) => {
 app.get('/tv/:id', (req, res) => {
     if (req.query.api_key) {
         const json = readFile();
-        const result = json.films.find(film => film.id === req.params.id && film.media_type === 'tv');
+        const result = json.films.find(film => film.id.toString() === req.params.id && film.media_type === 'tv');
         res.send(JSON.stringify(result));
     }
     res.status(404).send();
