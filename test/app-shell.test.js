@@ -33,7 +33,7 @@ const film = {
 };
 
 describe('APP Shell', () => {
-  it('show correctly', async () => {
+  it('show correctly APP Shell', async () => {
     const el = (await fixture(html`
       <app-shell></app-shell>
     `));
@@ -52,7 +52,7 @@ describe('APP Shell', () => {
     const el = (await fixture(html`
       <app-shell></app-shell>
     `));
-    el._searchFilm({ detail: 'game' }, true);
+    await el._searchFilm({ detail: 'game' }, true);
     expect(el.search).to.be.equal('game');
     expect(el.loading).to.be.false;
     expect(el.films.length).to.be.equal(0);
@@ -63,7 +63,7 @@ describe('APP Shell', () => {
     const el = (await fixture(html`
       <app-shell></app-shell>
     `));
-    el._searchFilm({ detail: 'game' }, true);
+    await el._searchFilm({ detail: 'game' }, true);
     expect(el.search).to.be.equal('game');
     expect(el.loading).to.be.false;
     expect(el.films.length).to.be.equal(1);

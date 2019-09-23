@@ -92,10 +92,15 @@ class AppShell extends LitElement {
     _searchFilm({ detail: topic }, offline = false) {
         this.loading = true;
         this.search = topic;
-        // recuperamos el topic para realizar la búsqueda
-        // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
-        // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
-        this._searchFilmOnline(topic);
+        if(navigator.onLine && !offline) {
+            // recuperamos el topic para realizar la búsqueda
+            // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
+            // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
+            this._searchFilmOnline(topic);
+        } else {
+            this.films = findFilmsInStorage(topic);
+            this.loading = false;
+        }
     }
 
     _searchFilmOnline(topic) {

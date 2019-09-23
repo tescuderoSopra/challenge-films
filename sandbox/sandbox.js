@@ -18,7 +18,6 @@ app.use(cors())
 app.get('/search/multi', (req, res) => {
     if(req.query.api_key && req.query.query) {
         const id = req.query.query;
-        console.log('req', req.query);
         const json = readFile();
         const results = json.films.filter(film => film.id === id);
         const total_results = results.length;

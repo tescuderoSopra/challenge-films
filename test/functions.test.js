@@ -112,4 +112,13 @@ describe('Functions', () => {
         expect(el).shadowDom.to.equalSnapshot();
     });
 
+    it('find and modify film', async () =>  {
+        window.localStorage.removeItem('films');
+        window.localStorage.setItem('films', JSON.stringify([film]));
+        functions.findAndModifyFilm(film.id);
+        const result = JSON.parse(window.localStorage.getItem('films'));
+        const expected = !film.isFavourite;
+        expect(result[0].isFavourite).to.be.equal(expected);
+    })
+
 });
