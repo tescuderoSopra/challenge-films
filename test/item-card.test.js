@@ -1,8 +1,7 @@
-import { html, fixture, expect, oneEvent } from '@open-wc/testing';
+import { html, fixture, expect } from '@open-wc/testing';
 
 import '../src/components/item-card';
 
-const test = ({ detail }) => { console.log('teeest', detail); return true; };
 const film = {
   original_name: "Game of Thrones",
   title: "Game of Thrones",
