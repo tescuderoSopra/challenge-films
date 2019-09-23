@@ -17,6 +17,20 @@
       "original_language": "en",
       "id": 1668,
       "vote_average": 7.9,
+      "production_companies": [
+        {
+          "id": 1957,
+          "logo_path": "/nmcNfPq03WLtOyufJzQbiPu2Enc.png",
+          "name": "Warner Bros. Television",
+          "origin_country": "US"
+        },
+        {
+          "id": 31810,
+          "logo_path": null,
+          "name": "Bright/Kauffman/Crane Productions",
+          "origin_country": "US"
+        }
+      ],
       "overview": "The misadventures of a group of friends as they navigate the pitfalls of work, life and love in Manhattan.",
       "poster_path": "/7buCWBTpiPrCF5Lt023dSC60rgS.jpg"
     },
@@ -39,7 +53,15 @@
       "id": 2304,
       "vote_average": 6,
       "overview": "Thomas & Friends is a British children's television series, which had its first broadcast on the ITV network on 4 September 1984. It is based on The Railway Series of books by the Reverend Wilbert Awdry and his son, Christopher Awdry. These books deal with the adventures of a group of anthropomorphised locomotives and road vehicles who live on the fictional Island of Sodor. The books were based on stories Wilbert told to entertain his son, Christopher during his recovery from measles. From Series one to four, many of the stories are based on events from Awdry's personal experience.",
-      "poster_path": "/7W3BOFklCri1Bg0yNTZXM3em1fK.jpg"
+      "poster_path": "/7W3BOFklCri1Bg0yNTZXM3em1fK.jpg",
+      "production_companies": [
+        {
+          "id": 46875,
+          "logo_path": null,
+          "name": "Nitrogen Studios Canada",
+          "origin_country": ""
+        }
+      ]
     },
     {
       "original_name": "Barney & Friends",
@@ -443,7 +465,33 @@
       "id": 1399,
       "vote_average": 8.1,
       "overview": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
-      "poster_path": "/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg"
+      "poster_path": "/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg",
+      "production_companies": [
+        {
+          "id": 76043,
+          "logo_path": "/9RO2vbQ67otPrBLXCaC8UMp3Qat.png",
+          "name": "Revolution Sun Studios",
+          "origin_country": "US"
+        },
+        {
+          "id": 12525,
+          "logo_path": null,
+          "name": "Television 360",
+          "origin_country": ""
+        },
+        {
+          "id": 5820,
+          "logo_path": null,
+          "name": "Generator Entertainment",
+          "origin_country": ""
+        },
+        {
+          "id": 12526,
+          "logo_path": null,
+          "name": "Bighead Littlehead",
+          "origin_country": ""
+        }
+      ]
     },
     {
       "poster_path": "/in43bQ7k0ttr666IPP94IlbQbTR.jpg",
@@ -896,7 +944,8 @@
       "backdrop_path": null,
       "adult": false,
       "overview": "Hola Venky is a romantic comedy that follows Venky's quirky and amusing journey from his groin to his heart. Venky is an Indian Techie - middle aged, divorced and confused, and his journey takes him all the way from Matunga in Mumbai to the Bay Area in San Francisco. Thrown into a \"situation\" where he loses 2% of his \"god\", Venky is forced to go on an introspective journey that leads him straight into the world of the Mexicans and Mariachi music. Along the way, he is forced to question certain stereotypical notions of 'machismo' that he has grown up on.  Hola Venky is a 88 minute indie film that has wowed the audience around the world by screening in alternative spaces under the concept of \"The Great Indian Traveling Cinema\". The director of the film literally traveled with the film to various alternative spaces with his Projector and screened the movie for his audience. The film is Sandeep Mohan's second feature film after his well-received debut film \"Love, Wrinkle-free\".",
-      "poster_path": "/25RceavI6zuutyPG6gwSz69Fr3M.jpg"
+      "poster_path": "/25RceavI6zuutyPG6gwSz69Fr3M.jpg",
+      "production_companies": []
     },
     {
       "vote_count": 1,
