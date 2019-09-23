@@ -18,7 +18,8 @@ class AppShell extends LitElement {
             showCreateFavourites: { type: Boolean }, // booleano que permite ver la modal donde crear una peli/serie nueva
             favourites: { type: Array }, //array de favoritos
             showListFavourites: { type: Boolean }, // booleano que permite mostrar la lista de favoritos
-            loading: { type: Boolean } // booleano que indica si está cargando o no
+            loading: { type: Boolean }, // booleano que indica si está cargando o no
+            error: { type: String } // string que indica que hay error
         }
     }
 
@@ -59,9 +60,13 @@ class AppShell extends LitElement {
         this.searches = searchInStorage('topics').slice(0, constants.lastSearchesNumber);
         this.showCreateFavourites = false;
         this.loading = true;
+        this.error = null;
     }
 
     render() {
+        let notResults = '';
+        if (this.showListFavourites) notResults = 'No hay favoritos';
+        else if (this.error) notResults = `Ha ocurrido un error inesperado: ${this.error}`;
         return html`
         <header>
             <seeker-films @searchEvent=${this._searchFilm} search=${this.search} buttonLabel="Buscar" placeholder="Inserte un término de búsqueda"></seeker-films>
@@ -74,10 +79,11 @@ class AppShell extends LitElement {
             ${this.loading && this.search ? html`<spin-loaded></spin-loaded>` :
                 html`<list-films
                     .films=${this.showListFavourites ? this.favourites : this.films}
-                    notResults=${this.showListFavourites ? 'No hay favoritos' : ''}>
+                    notResults=${notResults}>
                 </list-films>`
             }
             ${this.showCreateFavourites ? html`<form-favourite @addFavourite=${this._addFavourite} @closeModal=${this._showModalFavourites}></form-favourite>` : null}
+            
             <button title="Añadir información sobre una nueva película" class="showModalCreateFavourites" @click=${this._showModalFavourites}>
                +
             </button>
@@ -92,7 +98,8 @@ class AppShell extends LitElement {
     _searchFilm({ detail: topic }, offline = false) {
         this.loading = true;
         this.search = topic;
-        if(navigator.onLine && !offline) {
+        this.searches = saveSearchInStorage(topic).slice(0, constants.lastSearchesNumber);
+        if (navigator.onLine && !offline) {
             // recuperamos el topic para realizar la búsqueda
             // realizamos la búsqueda en la API o en LocalStorage si no hay conexión
             // https://api.themoviedb.org/3/search/multi?api_key=96befef4ed5f899937a3ab357c0e2a4f&language=en-US&query=x-men&page=1&include_adult=false
@@ -114,7 +121,11 @@ class AppShell extends LitElement {
             },
         })
             .then(response => response.json())
-            .catch(ex => console.log('ex', ex))
+            .catch(ex => {
+                console.error('ex searchFilmOnline', ex);
+                this.error = ex;
+                this.loading = false;
+            })
             .then(({ total_results, results }) => {
                 if (total_results > 0) {
                     let films = transformArrayFilmsSeries(results);
@@ -127,8 +138,8 @@ class AppShell extends LitElement {
                 } else {
                     this.films = [];
                 }
-                this.searches = saveSearchInStorage(topic).slice(0, constants.lastSearchesNumber);
                 this.loading = false;
+                this.error = null;
             });
     }
 
